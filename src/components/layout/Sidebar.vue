@@ -1,0 +1,46 @@
+<script setup lang="ts">
+interface Menu {
+  name: string
+  path: string
+  icon: string
+  divide?: boolean // 菜单项下显示分割线
+}
+
+const menus = ref<Menu[]>([
+  {
+    name: '为我推荐',
+    path: '/',
+    icon: 'i-solar-home-angle-2-bold',
+  },
+  {
+    name: '精选',
+    path: '/handpicked',
+    icon: 'i-solar-music-library-2-bold-duotone',
+  },
+])
+</script>
+
+<template>
+  <div w-205px bg="slate-50">
+    <div flex="~ col gap-y-1" p-6>
+      <RouterLink
+        v-for="menu in menus"
+        :key="menu.path"
+        :to="menu.path"
+        flex="~ flex items-center gap-x-2"
+        hover="bg-slate-100"
+        transition="duration-300"
+        rounded-lg px-3 py-2 text-gray-500
+      >
+        <div :class="menu.icon" />
+        <span text="sm">{{ menu.name }}</span>
+      </RouterLink>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+a.router-link-exact-active {
+  --at-apply: bg-netease-red text-white;
+}
+</style>
