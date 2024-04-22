@@ -22,7 +22,7 @@ watch(active, (val) => {
 </script>
 
 <template>
-  <div relative px-6 flex="~ items-center gap-x-3">
+  <div relative px-6 flex="~ items-center gap-x-5">
     <div
       v-for="(item, index) in items"
       :key="index"

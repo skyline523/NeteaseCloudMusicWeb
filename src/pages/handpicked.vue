@@ -12,6 +12,9 @@ const tabs = ref<Tab[]>([
 <template>
   <div>
     <LeTabs :items="tabs" />
+    <div>
+      123
+    </div>
   </div>
 </template>
 
