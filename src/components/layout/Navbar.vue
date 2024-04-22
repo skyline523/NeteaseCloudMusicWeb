@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const loginModalVisible = ref(true)
+const loginModalVisible = ref(false)
 </script>
 
 <template>

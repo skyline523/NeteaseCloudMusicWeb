@@ -13,6 +13,7 @@ import WebfontDownload from 'vite-plugin-webfont-dl'
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { VueHooksPlusResolver } from '@vue-hooks-plus/resolvers'
 
 export default defineConfig({
   resolve: {
@@ -57,6 +58,7 @@ export default defineConfig({
         'src/composables',
         'src/stores',
       ],
+      resolvers: [VueHooksPlusResolver()],
       vueTemplate: true,
     }),
 
