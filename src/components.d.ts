@@ -11,6 +11,7 @@ declare module 'vue' {
     AModal: typeof import('ant-design-vue/es')['Modal']
     AQrcode: typeof import('ant-design-vue/es')['QRCode']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
+    LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LoginModal: typeof import('./components/layout/LoginModal.vue')['default']
     Navbar: typeof import('./components/layout/Navbar.vue')['default']
     README: typeof import('./components/README.md')['default']
@@ -20,5 +21,6 @@ declare module 'vue' {
     TheCounter: typeof import('./components/TheCounter.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     TheInput: typeof import('./components/TheInput.vue')['default']
+    Types: typeof import('./components/LeTabs/types.vue')['default']
   }
 }

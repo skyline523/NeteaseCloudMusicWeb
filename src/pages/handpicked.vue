@@ -1,5 +1,18 @@
+<script setup lang="ts">
+import type { Tab } from '~/components/LeTabs/types'
+
+const tabs = ref<Tab[]>([
+  { label: '精选', path: '' },
+  { label: '歌单广场', path: '' },
+  { label: '排行榜', path: '' },
+  { label: '歌手', path: '' },
+])
+</script>
+
 <template>
-  <div>精选</div>
+  <div>
+    <LeTabs :items="tabs" />
+  </div>
 </template>
 
 <route lang="yaml">

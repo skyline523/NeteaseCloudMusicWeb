@@ -15,7 +15,7 @@ const menus = ref<Menu[]>([
     icon: 'i-solar-home-angle-2-bold',
   },
   {
-    name: '精选',
+    name: '云音乐精选',
     path: '/handpicked',
     icon: 'i-solar-music-library-2-bold-duotone',
   },
@@ -26,7 +26,7 @@ const menus = ref<Menu[]>([
   <div w-205px bg="slate-50">
     <div px-6 py-2>
       <RouterLink to="/">
-        <img :src="logo" alt="">
+        <img :src="logo" hover="drop-shadow" transition duration-300>
       </RouterLink>
     </div>
     <div flex="~ col gap-y-1" p-6>
