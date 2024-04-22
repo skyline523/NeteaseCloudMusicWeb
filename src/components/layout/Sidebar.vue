@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import logo from '~/assets/images/logo-with-words.webp'
+
 interface Menu {
   name: string
   path: string
@@ -22,6 +24,11 @@ const menus = ref<Menu[]>([
 
 <template>
   <div w-205px bg="slate-50">
+    <div px-6 py-2>
+      <RouterLink to="/">
+        <img :src="logo" alt="">
+      </RouterLink>
+    </div>
     <div flex="~ col gap-y-1" p-6>
       <RouterLink
         v-for="menu in menus"
