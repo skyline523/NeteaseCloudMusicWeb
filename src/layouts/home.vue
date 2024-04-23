@@ -8,7 +8,7 @@
     class="-translate-x-1/2 -translate-y-1/2"
   >
     <Sidebar />
-    <div flex="1" p-4>
+    <div flex="1" w-0 p-4>
       <Navbar />
       <RouterView />
     </div>
