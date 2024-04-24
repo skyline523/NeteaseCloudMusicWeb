@@ -1,9 +1,14 @@
 export interface QRCodeKey {
   code: number
-  unikey: string
+  data: {
+    unikey: string
+  }
 }
 
 export interface QRCode {
-  qrimg?: string
-  qrurl: string
+  code: number
+  data: {
+    qrimg?: string
+    qrurl: string
+  }
 }

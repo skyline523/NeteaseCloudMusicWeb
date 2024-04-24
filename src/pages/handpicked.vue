@@ -10,32 +10,39 @@ const tabs = ref<Tab[]>([
   { label: '歌手', path: '' },
 ])
 
-const { data: banners } = useRequest(homebanner)
+const { data: banners, loading } = useRequest(homebanner)
 </script>
 
 <template>
   <div>
     <LeTabs :items="tabs" />
-    <div relative mt-6 px-6>
-      <LeSwiper v-if="banners">
-        <SwiperSlide
-          v-for="banner in banners.banners"
-          :key="banner.encodeId"
-        >
-          <img h-180px border="~ 1 rounded-xl" :src="banner.imageUrl">
-          <div
-            position="absolute right-1 bottom-2"
-            text="gray-500 xs"
-            bg="white"
-            border="rounded"
-            transform="scale-80"
-            p-2px shadow-sm
+    <a-skeleton
+      active
+      :paragraph="{ rows: 4 }"
+      :loading="loading"
+      mt-6 h-180px px-6
+    >
+      <div relative mt-6 px-6>
+        <LeSwiper v-if="banners">
+          <SwiperSlide
+            v-for="banner in banners.banners"
+            :key="banner.encodeId"
           >
-            {{ banner.typeTitle }}
-          </div>
-        </SwiperSlide>
-      </LeSwiper>
-    </div>
+            <img h-180px border="~ 1 rounded-xl" :src="banner.imageUrl">
+            <div
+              position="absolute right-1 bottom-2"
+              text="gray-500 xs"
+              bg="white"
+              border="rounded"
+              transform="scale-80"
+              p-2px shadow-sm
+            >
+              {{ banner.typeTitle }}
+            </div>
+          </SwiperSlide>
+        </LeSwiper>
+      </div>
+    </a-skeleton>
   </div>
 </template>
 

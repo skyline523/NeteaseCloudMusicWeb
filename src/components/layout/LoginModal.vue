@@ -9,7 +9,7 @@ const { data: qrCode, run: getQRCode } = useRequest(generateQRCode, {
 
 const { data: _ } = useRequest(generateQRCodeKey, {
   onSuccess(data) {
-    getQRCode(data.unikey)
+    getQRCode(data.data.unikey)
   },
 })
 </script>
@@ -25,7 +25,9 @@ const { data: _ } = useRequest(generateQRCodeKey, {
       <p text="xl" font="bold">
         扫码登录
       </p>
-      <a-qrcode v-if="qrCode?.qrurl" :value="qrCode?.qrurl" />
+      <div h-160px w-160px>
+        <a-qrcode v-if="qrCode?.data.qrurl" :value="qrCode?.data.qrurl" />
+      </div>
       <p cursor-default>
         <span text="red-300" mr-1>网易云音乐APP</span>扫码登录
       </p>

@@ -70,6 +70,6 @@ const loginModalVisible = ref(false)
       </a-tooltip>
     </div>
 
-    <LoginModal v-model="loginModalVisible" />
+    <LoginModal v-if="loginModalVisible" v-model="loginModalVisible" />
   </div>
 </template>
