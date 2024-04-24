@@ -1,16 +1,22 @@
 <script setup lang="ts">
-// import Swiper core and required modules
-import { Navigation, Pagination } from 'swiper/modules'
-
-// Import Swiper Vue.js components
 import { Swiper } from 'swiper/vue'
-import arrowLeft from '~/assets/images/arrow-left.png'
-import arrowRight from '~/assets/images/arrow-right.png'
+import { Navigation, Pagination } from 'swiper/modules'
+import type { PaginationOptions } from 'swiper/types'
 
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import arrowLeft from '~/assets/images/arrow-left.png'
+import arrowRight from '~/assets/images/arrow-right.png'
+
+withDefaults(defineProps<{
+  spaceBetween: number
+  pagination: PaginationOptions | boolean
+  slidesPerView?: number
+}>(), {
+  spaceBetween: 15,
+  pagination: false,
+})
 
 const swiper = ref()
 </script>
@@ -23,19 +29,17 @@ const swiper = ref()
       prevEl: '.prev-btn',
       hideOnClick: true,
     }"
-    :pagination="{
-      dynamicBullets: true,
-    }"
-    :space-between="15"
+    :pagination="pagination"
+    :space-between="spaceBetween"
     :modules="[Navigation, Pagination]"
-    :slides-per-view="2"
+    :slides-per-view="slidesPerView"
     :loop="true"
     :autoplay="true"
     class="!static"
   >
     <slot />
     <div
-      class="prev-btn -mt-20px"
+      class="prev-btn -translate-y-1/2"
       position="absolute top-1/2 left-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
       hover="opacity-100"
@@ -44,7 +48,7 @@ const swiper = ref()
       <img :src="arrowLeft" h-full w-full>
     </div>
     <div
-      class="-mt-20px next-btn"
+      class="next-btn -translate-y-1/2"
       position="absolute top-1/2 right-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
       hover="opacity-100"
