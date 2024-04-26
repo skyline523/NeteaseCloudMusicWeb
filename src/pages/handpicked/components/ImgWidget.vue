@@ -40,6 +40,11 @@ colorfulImg(props.imgUrl).then((rgb) => {
   >
     {{ name }}
   </div>
+  <!-- 用于遮盖渐变色块超出的底部 -->
+  <div
+    position="absolute left-0 bottom-0 right-0"
+    z-5 h-56px w-full bg-white
+  />
   <div
     position="absolute left-0 bottom-0 right-0"
     border="rounded-xl"
