@@ -36,7 +36,7 @@ const { data: recommendPlayList } = useRequest(recommendList)
             v-for="banner in banners.banners"
             :key="banner.encodeId"
           >
-            <img h-180px border="~ 1 rounded-xl" :src="banner.imageUrl">
+            <img h-170px border="~ 1 rounded-xl" :src="banner.imageUrl">
             <div
               position="absolute right-1 bottom-2"
               text="gray-500 xs"
