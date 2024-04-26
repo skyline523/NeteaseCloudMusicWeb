@@ -10,8 +10,8 @@ import arrowLeft from '~/assets/images/arrow-left.png'
 import arrowRight from '~/assets/images/arrow-right.png'
 
 withDefaults(defineProps<{
-  spaceBetween: number
   pagination: PaginationOptions | boolean
+  spaceBetween?: number
   slidesPerView?: number
 }>(), {
   spaceBetween: 15,
