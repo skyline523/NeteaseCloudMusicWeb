@@ -35,3 +35,39 @@ export interface RecommendList {
   trackNumberUpdateTime: number
   type: number
 }
+
+export interface ListDetailRes {
+  code: number
+  fromUserCount: number
+  playlist: PlayList
+}
+
+export interface PlayList {
+  commentCount: number
+  commentThreadId: string
+  copied: boolean
+  coverImgId: number
+  coverImgId_str: string
+  coverImgUrl: string
+  createTime: string
+  updateTime: string
+  creator: string
+  description: string
+  id: number
+  name: string
+  playCount: number
+  shareCount: number
+  subscribedCount: number
+  subscribers: {
+    nickname: string
+    avatarUrl: string
+    userId: number
+  }[]
+  tags: string[]
+  trackCount: number
+  tracks: {
+    name: string
+    id: number
+  }[]
+  userId: number
+}

@@ -78,7 +78,7 @@ const { data: recommendPlayList } = useRequest(recommendList)
             <img
               h-260px object-cover border="0 rounded-xl" :src="list.picUrl"
             >
-            <ImgWidget :img-url="list.picUrl" :name="list.name" />
+            <ImgWidget :img-url="list.picUrl" :name="list.name" :list-id="list.id" />
           </SwiperSlide>
         </LeSwiper>
       </div>

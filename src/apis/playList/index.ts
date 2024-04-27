@@ -1,4 +1,4 @@
-import type { BannerRes, RecommendListRes } from './types'
+import type { BannerRes, ListDetailRes, RecommendListRes } from './types'
 import { request } from '~/utils/request'
 
 /**
@@ -27,4 +27,13 @@ export function highQualityList(limit: number, before?: string) {
  */
 export function recommendList(limit = 10) {
   return request<RecommendListRes>(`/personalized?limit=${limit}`)
+}
+
+/**
+ * 返回歌单详情（未登录时详情不完整）
+ * @param {number} id 歌单id
+ * @returns 返回歌单详情（未登录时详情不完整）
+ */
+export function listDetail(id: number) {
+  return request<ListDetailRes>(`/playlist/detail?id=${id}`)
 }
