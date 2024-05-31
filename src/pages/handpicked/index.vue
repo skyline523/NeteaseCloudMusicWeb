@@ -20,19 +20,22 @@ const { data: recommendPlayList } = useRequest(recommendList)
 <template>
   <div>
     <LeTabs :items="tabs" />
-    <div mt-6 h-170px :class="{ 'px-6': loading }">
+    <div mt-4 h-170px :class="{ 'px-6': loading }">
       <a-skeleton
         active
         :paragraph="{ rows: 4 }"
         :loading="loading"
       >
-        <div relative mt-6 px-6>
+        <div relative px-6>
           <LeSwiper
             v-if="banners"
             :pagination="{
               dynamicBullets: true,
             }"
             :slides-per-view="2"
+            :speed="500"
+            :loop="true"
+            :autoplay="{ delay: 1000, disableOnInteraction: false }"
           >
             <SwiperSlide
               v-for="banner in banners.banners"
@@ -55,8 +58,8 @@ const { data: recommendPlayList } = useRequest(recommendList)
       </a-skeleton>
     </div>
 
-    <div mt-6>
-      <div flex="~ justify-start" mb-1 px-6>
+    <div mt-10>
+      <div flex="~ justify-start" px-6>
         <div flex="~ items-center">
           <p font-extrabold class="text-hover">
             推荐歌单
@@ -64,10 +67,11 @@ const { data: recommendPlayList } = useRequest(recommendList)
           <div i-solar-alt-arrow-right-linear />
         </div>
       </div>
-      <div relative px-6>
+      <div relative mt-2 px-6>
         <LeSwiper
           v-if="recommendPlayList"
           :slides-per-view="4"
+          :slides-per-group="2"
           :pagination="false"
         >
           <SwiperSlide

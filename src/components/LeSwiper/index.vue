@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Swiper } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
-import type { PaginationOptions } from 'swiper/types'
+import type { AutoplayOptions, PaginationOptions } from 'swiper/types'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -10,12 +10,41 @@ import arrowLeft from '~/assets/images/arrow-left.png'
 import arrowRight from '~/assets/images/arrow-right.png'
 
 withDefaults(defineProps<{
+  /**
+   * 是否显示分页，显示传true或分页配置项
+   */
   pagination: PaginationOptions | boolean
+  /**
+   * slide之间的间隔，单位px
+   */
   spaceBetween?: number
+  /**
+   * 每页展示几个slide
+   */
   slidesPerView?: number
+  /**
+   * 每次滚动是播放几个slide
+   */
+  slidesPerGroup?: number
+  /**
+   * 滚动动画速度，单位ms
+   */
+  speed?: number
+  /**
+   * 是否循环
+   */
+  loop?: boolean
+  /**
+   * 自动播放
+   */
+  autoplay?: boolean | AutoplayOptions
 }>(), {
-  spaceBetween: 15,
   pagination: false,
+  spaceBetween: 15,
+  slidesPerGroup: 1,
+  speed: 300,
+  loop: false,
+  autoplay: false,
 })
 
 const swiper = ref()
@@ -33,8 +62,10 @@ const swiper = ref()
     :space-between="spaceBetween"
     :modules="[Navigation, Pagination]"
     :slides-per-view="slidesPerView"
-    :loop="true"
-    :autoplay="true"
+    :slides-per-group="slidesPerGroup"
+    :speed="speed"
+    :loop="loop"
+    :autoplay="autoplay"
     class="!static"
   >
     <slot />
