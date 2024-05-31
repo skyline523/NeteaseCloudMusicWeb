@@ -21,6 +21,5 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
     '/handpicked/': RouteRecordInfo<'/handpicked/', '/handpicked', Record<never, never>, Record<never, never>>,
-    '/README': RouteRecordInfo<'/README', '/README', Record<never, never>, Record<never, never>>,
   }
 }
