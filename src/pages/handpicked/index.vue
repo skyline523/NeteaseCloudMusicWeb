@@ -35,7 +35,7 @@ const { data: recommendPlayList } = useRequest(recommendList)
             :slides-per-view="2"
             :speed="500"
             :loop="true"
-            :autoplay="{ delay: 1000, disableOnInteraction: false }"
+            :autoplay="{ delay: 3000, disableOnInteraction: false }"
           >
             <SwiperSlide
               v-for="banner in banners.banners"

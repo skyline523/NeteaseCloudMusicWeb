@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Swiper } from 'swiper/vue'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import type { AutoplayOptions, PaginationOptions } from 'swiper/types'
 
 import 'swiper/css'
@@ -9,7 +9,7 @@ import 'swiper/css/pagination'
 import arrowLeft from '~/assets/images/arrow-left.png'
 import arrowRight from '~/assets/images/arrow-right.png'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   /**
    * 是否显示分页，显示传true或分页配置项
    */
@@ -48,6 +48,17 @@ withDefaults(defineProps<{
 })
 
 const swiper = ref()
+
+// 轮播图组件模块
+const modules = computed(() => {
+  const m = [Navigation]
+  if (props.pagination)
+    m.push(Pagination)
+  if (props.autoplay)
+    m.push(Autoplay)
+
+  return m
+})
 </script>
 
 <template>
@@ -60,7 +71,7 @@ const swiper = ref()
     }"
     :pagination="pagination"
     :space-between="spaceBetween"
-    :modules="[Navigation, Pagination]"
+    :modules="modules"
     :slides-per-view="slidesPerView"
     :slides-per-group="slidesPerGroup"
     :speed="speed"
