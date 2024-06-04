@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { listDetail } from '~/apis/playList'
+// import { listDetail } from '~/apis/playList'
+import type { Resource } from '~/apis/home/type'
 
 export interface RGB {
   r: number
@@ -16,8 +17,8 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  listId: {
-    type: Number,
+  resourses: {
+    type: Array as PropType<Resource[]>,
     required: true,
   },
 })
@@ -35,9 +36,9 @@ colorfulImg(props.imgUrl).then((rgb) => {
 })
 
 // 获取歌单详情
-const { data: detail } = useRequest(listDetail, {
-  defaultParams: [props.listId],
-})
+// const { data: detail } = useRequest(listDetail, {
+//   defaultParams: [props.listId],
+// })
 </script>
 
 <template>
@@ -53,18 +54,23 @@ const { data: detail } = useRequest(listDetail, {
     </div>
     <div flex="~ items-end" mb-2>
       <div flex="~ 1 col gap-y-2" mb-2xp font="tabular-nums">
-        <div text="sm" flex="~ gap-x-1">
+        <div
+          v-for="item in resourses"
+          :key="item.resourceId"
+          text="sm"
+          flex="~ gap-x-1"
+        >
           <span text="gray-300">1</span>
-          <span text="gray-200" line-clamp-1>{{ detail?.playlist.tracks[0].name }}</span>
+          <span text="gray-200" line-clamp-1>{{ item.uiElement.mainTitle.title }}</span>
         </div>
-        <div text="sm" flex="~ gap-x-1">
+        <!-- <div text="sm" flex="~ gap-x-1">
           <span text="gray-300">2</span>
           <span text="gray-200" line-clamp-1>{{ detail?.playlist.tracks[1].name }}</span>
         </div>
         <div text="sm" flex="~ gap-x-1">
           <span text="gray-300">3</span>
           <span text="gray-200" line-clamp-1>{{ detail?.playlist.tracks[2].name }}</span>
-        </div>
+        </div> -->
       </div>
       <div
         flex="~ shrink-0 justify-center items-end"

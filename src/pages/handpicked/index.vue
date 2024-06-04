@@ -3,7 +3,7 @@ import { SwiperSlide } from 'swiper/vue'
 
 import ImgWidget from './components/ImgWidget.vue'
 import type { Tab } from '~/components/LeTabs/types'
-import { homebanner, recommendList } from '~/apis/playList'
+import { getHomepageBlock } from '~/apis/home'
 
 const tabs = ref<Tab[]>([
   { label: '精选', path: '' },
@@ -12,9 +12,25 @@ const tabs = ref<Tab[]>([
   { label: '歌手', path: '' },
 ])
 
-const { data: banners, loading } = useRequest(homebanner)
+const { data: homepageBlock, loading } = useRequest(getHomepageBlock)
 
-const { data: recommendPlayList } = useRequest(recommendList)
+const bannerPart = computed(() => {
+  const part = homepageBlock.value?.data.blocks.find(item => item.blockCode === 'HOMEPAGE_BANNER')
+
+  if (part)
+    return part.extInfo?.banners
+
+  return []
+})
+
+const rcmdPlayListPart = computed(() => {
+  const part = homepageBlock.value?.data.blocks.find(item => item.blockCode === 'HOMEPAGE_BLOCK_PLAYLIST_RCMD')
+
+  if (part)
+    return part.creatives
+
+  return []
+})
 </script>
 
 <template>
@@ -28,7 +44,7 @@ const { data: recommendPlayList } = useRequest(recommendList)
       >
         <div relative px-6>
           <LeSwiper
-            v-if="banners"
+            v-if="bannerPart"
             :pagination="{
               dynamicBullets: true,
             }"
@@ -38,10 +54,10 @@ const { data: recommendPlayList } = useRequest(recommendList)
             :autoplay="{ delay: 3000, disableOnInteraction: false }"
           >
             <SwiperSlide
-              v-for="banner in banners.banners"
-              :key="banner.encodeId"
+              v-for="item in bannerPart"
+              :key="item.encodeId"
             >
-              <img h-170px border="~ 1 rounded-xl" :src="banner.imageUrl">
+              <img h-170px w-full object-cover border="~ 1 rounded-xl" :src="item.pic">
               <div
                 position="absolute right-1 bottom-2"
                 text="gray-500 xs"
@@ -50,7 +66,7 @@ const { data: recommendPlayList } = useRequest(recommendList)
                 transform="scale-80"
                 p-2px shadow-sm
               >
-                {{ banner.typeTitle }}
+                {{ item.typeTitle }}
               </div>
             </SwiperSlide>
           </LeSwiper>
@@ -69,20 +85,24 @@ const { data: recommendPlayList } = useRequest(recommendList)
       </div>
       <div relative mt-2 px-6>
         <LeSwiper
-          v-if="recommendPlayList"
+          v-if="rcmdPlayListPart"
           :slides-per-view="4"
           :slides-per-group="2"
           :pagination="false"
         >
           <SwiperSlide
-            v-for="list in recommendPlayList.result"
-            :key="list.id"
+            v-for="list in rcmdPlayListPart"
+            :key="list.creativeId!"
             class="swipe roundex-xl cursor-pointer overflow-hidden"
           >
             <img
-              h-260px object-cover border="0 rounded-xl" :src="list.picUrl"
+              h-260px object-cover border="0 rounded-xl" :src="list.uiElement.image?.imageUrl"
             >
-            <ImgWidget :img-url="list.picUrl" :name="list.name" :list-id="list.id" />
+            <ImgWidget
+              :img-url="list.uiElement.image?.imageUrl!"
+              :name="list.uiElement.mainTitle?.title!"
+              :resourses="list.resources"
+            />
           </SwiperSlide>
         </LeSwiper>
       </div>
