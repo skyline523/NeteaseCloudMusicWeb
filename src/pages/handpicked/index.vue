@@ -99,9 +99,9 @@ const rcmdPlayListPart = computed(() => {
               h-260px object-cover border="0 rounded-xl" :src="list.uiElement.image?.imageUrl"
             >
             <ImgWidget
+              :id="list.creativeId!"
               :img-url="list.uiElement.image?.imageUrl!"
               :name="list.uiElement.mainTitle?.title!"
-              :resourses="list.resources"
             />
           </SwiperSlide>
         </LeSwiper>

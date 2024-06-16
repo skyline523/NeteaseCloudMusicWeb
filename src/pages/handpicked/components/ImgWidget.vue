@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { playlistDetail } from '~/apis/playList'
+
 // import { listDetail } from '~/apis/playList'
-import type { Resource } from '~/apis/home/type'
 
 export interface RGB {
   r: number
@@ -17,8 +18,8 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  resourses: {
-    type: Array as PropType<Resource[]>,
+  id: {
+    type: String,
     required: true,
   },
 })
@@ -35,10 +36,9 @@ colorfulImg(props.imgUrl).then((rgb) => {
   imgColorRGB.value = rgb
 })
 
-// 获取歌单详情
-// const { data: detail } = useRequest(listDetail, {
-//   defaultParams: [props.listId],
-// })
+const { data: detail } = useRequest(playlistDetail, {
+  defaultParams: [props.id],
+})
 </script>
 
 <template>
@@ -49,34 +49,27 @@ colorfulImg(props.imgUrl).then((rgb) => {
     class="swipe-content"
     z-15 w-full px-3 py-6px
   >
-    <div mb-2>
+    <div mb-2 h-56px py-1>
       {{ name }}
     </div>
     <div flex="~ items-end" mb-2>
       <div flex="~ 1 col gap-y-2" mb-2xp font="tabular-nums">
         <div
-          v-for="item in resourses"
-          :key="item.resourceId"
+          v-for="(item, index) in detail?.playlist.tracks.slice(0, 3)"
+          :key="item.id"
           text="sm"
           flex="~ gap-x-1"
         >
-          <span text="gray-300">1</span>
-          <span text="gray-200" line-clamp-1>{{ item.uiElement.mainTitle.title }}</span>
+          <span text="gray-300">{{ index + 1 }}</span>
+          <span text="gray-200" line-clamp-1>{{ item.name }}</span>
         </div>
-        <!-- <div text="sm" flex="~ gap-x-1">
-          <span text="gray-300">2</span>
-          <span text="gray-200" line-clamp-1>{{ detail?.playlist.tracks[1].name }}</span>
-        </div>
-        <div text="sm" flex="~ gap-x-1">
-          <span text="gray-300">3</span>
-          <span text="gray-200" line-clamp-1>{{ detail?.playlist.tracks[2].name }}</span>
-        </div> -->
       </div>
       <div
-        flex="~ shrink-0 justify-center items-end"
+        flex="~ shrink-0 justify-end items-end"
         text="40px"
         class="swipe-content-play h-full w-[40%] opacity-0"
         transition="opacity duration-300"
+        hover="scale-105"
       >
         <div i-solar-play-circle-bold />
       </div>

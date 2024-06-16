@@ -31,9 +31,10 @@ export function recommendList(limit = 10) {
 
 /**
  * 返回歌单详情（未登录时详情不完整）
- * @param {number} id 歌单id
+ * @param id - 歌单id
+ *
  * @returns 返回歌单详情（未登录时详情不完整）
  */
-export function listDetail(id: number) {
+export function playlistDetail(id: string) {
   return request<ListDetailRes>(`/playlist/detail?id=${id}`)
 }
