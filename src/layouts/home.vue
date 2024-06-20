@@ -1,6 +1,6 @@
 <template>
   <main
-    h-700px max-w-6xl w-full overflow-hidden shadow-gray-200 shadow-lg
+    h-780px max-w-1220px w-full overflow-hidden shadow-gray-200 shadow-lg
     text="center gray-700"
     flex="~"
     position="fixed top-1/2 left-1/2"

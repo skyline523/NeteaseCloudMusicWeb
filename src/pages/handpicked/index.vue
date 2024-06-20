@@ -3,7 +3,8 @@ import { SwiperSlide } from 'swiper/vue'
 
 import ImgWidget from './components/ImgWidget.vue'
 import type { Tab } from '~/components/LeTabs/types'
-import { getHomepageBlock } from '~/apis/home'
+import { getHomeBanner } from '~/apis/home'
+import { getRcmdPlaylist } from '~/apis/playList'
 
 const tabs = ref<Tab[]>([
   { label: '精选', path: '' },
@@ -12,24 +13,12 @@ const tabs = ref<Tab[]>([
   { label: '歌手', path: '' },
 ])
 
-const { data: homepageBlock, loading } = useRequest(getHomepageBlock)
+// 轮播图
+const { data: bannersPart, loading } = useRequest(getHomeBanner)
 
-const bannerPart = computed(() => {
-  const part = homepageBlock.value?.data.blocks.find(item => item.blockCode === 'HOMEPAGE_BANNER')
-
-  if (part)
-    return part.extInfo?.banners
-
-  return []
-})
-
-const rcmdPlayListPart = computed(() => {
-  const part = homepageBlock.value?.data.blocks.find(item => item.blockCode === 'HOMEPAGE_BLOCK_PLAYLIST_RCMD')
-
-  if (part)
-    return part.creatives
-
-  return []
+// 推荐歌单
+const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
+  defaultParams: [10],
 })
 </script>
 
@@ -44,7 +33,7 @@ const rcmdPlayListPart = computed(() => {
       >
         <div relative px-6>
           <LeSwiper
-            v-if="bannerPart"
+            v-if="bannersPart"
             :pagination="{
               dynamicBullets: true,
             }"
@@ -54,10 +43,10 @@ const rcmdPlayListPart = computed(() => {
             :autoplay="{ delay: 3000, disableOnInteraction: false }"
           >
             <SwiperSlide
-              v-for="item in bannerPart"
-              :key="item.encodeId"
+              v-for="banner in bannersPart.banners"
+              :key="banner.encodeId"
             >
-              <img h-170px w-full object-cover border="~ 1 rounded-xl" :src="item.pic">
+              <img h-170px w-full object-cover border="~ 1 rounded-xl" :src="banner.imageUrl">
               <div
                 position="absolute right-1 bottom-2"
                 text="gray-500 xs"
@@ -66,7 +55,7 @@ const rcmdPlayListPart = computed(() => {
                 transform="scale-80"
                 p-2px shadow-sm
               >
-                {{ item.typeTitle }}
+                {{ banner.typeTitle }}
               </div>
             </SwiperSlide>
           </LeSwiper>
@@ -74,7 +63,7 @@ const rcmdPlayListPart = computed(() => {
       </a-skeleton>
     </div>
 
-    <div mt-10>
+    <div mt-6>
       <div flex="~ justify-start" px-6>
         <div flex="~ items-center">
           <p font-extrabold class="text-hover">
@@ -85,23 +74,23 @@ const rcmdPlayListPart = computed(() => {
       </div>
       <div relative mt-2 px-6>
         <LeSwiper
-          v-if="rcmdPlayListPart"
+          v-if="rcmdPlaylistPart"
           :slides-per-view="4"
           :slides-per-group="2"
+          :space-between="20"
           :pagination="false"
         >
           <SwiperSlide
-            v-for="list in rcmdPlayListPart"
-            :key="list.creativeId!"
+            v-for="list in rcmdPlaylistPart.result"
+            :key="list.id"
             class="swipe roundex-xl cursor-pointer overflow-hidden"
           >
             <img
-              h-260px object-cover border="0 rounded-xl" :src="list.uiElement.image?.imageUrl"
+              h-272px object-cover border="0 rounded-xl" :src="list.picUrl"
             >
             <ImgWidget
-              :id="list.creativeId!"
-              :img-url="list.uiElement.image?.imageUrl!"
-              :name="list.uiElement.mainTitle?.title!"
+              :id="list.id"
+              :img-url="list.picUrl"
             />
           </SwiperSlide>
         </LeSwiper>

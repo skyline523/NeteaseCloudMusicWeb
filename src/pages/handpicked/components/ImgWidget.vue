@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { playlistDetail } from '~/apis/playList'
-
-// import { listDetail } from '~/apis/playList'
+import { getPlaylistDetail } from '~/apis/playList'
 
 export interface RGB {
   r: number
@@ -14,12 +12,8 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
   id: {
-    type: String,
+    type: Number,
     required: true,
   },
 })
@@ -36,7 +30,7 @@ colorfulImg(props.imgUrl).then((rgb) => {
   imgColorRGB.value = rgb
 })
 
-const { data: detail } = useRequest(playlistDetail, {
+const { data: listDetail } = useRequest(getPlaylistDetail, {
   defaultParams: [props.id],
 })
 </script>
@@ -49,19 +43,19 @@ const { data: detail } = useRequest(playlistDetail, {
     class="swipe-content"
     z-15 w-full px-3 py-6px
   >
-    <div mb-2 h-56px py-1>
-      {{ name }}
+    <div mb-2 h-56px py-2>
+      {{ listDetail?.playlist.name }}
     </div>
     <div flex="~ items-end" mb-2>
       <div flex="~ 1 col gap-y-2" mb-2xp font="tabular-nums">
         <div
-          v-for="(item, index) in detail?.playlist.tracks.slice(0, 3)"
-          :key="item.id"
+          v-for="(track, index) in listDetail?.playlist.tracks.slice(0, 3)"
+          :key="track.id"
           text="sm"
           flex="~ gap-x-1"
         >
           <span text="gray-300">{{ index + 1 }}</span>
-          <span text="gray-200" line-clamp-1>{{ item.name }}</span>
+          <span text="gray-200" line-clamp-1>{{ track.name }}</span>
         </div>
       </div>
       <div
