@@ -36,3 +36,20 @@ export interface Playlist {
     id: number
   }[]
 }
+
+export interface TopListRes {
+  code: number
+  list: TopListItem[]
+}
+
+export interface TopListItem {
+  tracks: {
+    first: string
+    second: string
+  }[]
+  updateFrequency: string
+  id: number
+  name: string
+  description: string
+  coverImgUrl: string
+}

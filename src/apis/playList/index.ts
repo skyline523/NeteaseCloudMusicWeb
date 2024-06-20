@@ -1,4 +1,4 @@
-import type { ListDetailRes, RecommendListRes } from './types'
+import type { ListDetailRes, RecommendListRes, TopListRes } from './types'
 import { request } from '~/utils/request'
 
 /**
@@ -23,9 +23,16 @@ export function getRcmdPlaylist(limit = 10) {
 /**
  * 返回歌单详情（未登录时详情不完整）
  * @param id - 歌单id
- *
  * @returns 返回歌单详情（未登录时详情不完整）
  */
 export function getPlaylistDetail(id: number) {
   return request<ListDetailRes>(`/playlist/detail?id=${id}`)
+}
+
+/**
+ * 获取所有榜单内容摘要
+ * @returns 所有榜单简要信息
+ */
+export function getTopListSum() {
+  return request<TopListRes>('/toplist/detail')
 }
