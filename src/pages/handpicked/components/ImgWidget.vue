@@ -45,7 +45,7 @@ const { data: detail } = useRequest(playlistDetail, {
   <div
     position="absolute left-0 bottom-0 right-0"
     text="start white 15px"
-    flex="~ col justify-end"
+    flex="~ col justify-start"
     class="swipe-content"
     z-15 w-full px-3 py-6px
   >
@@ -69,9 +69,8 @@ const { data: detail } = useRequest(playlistDetail, {
         text="40px"
         class="swipe-content-play h-full w-[40%] opacity-0"
         transition="opacity duration-300"
-        hover="scale-105"
       >
-        <div i-solar-play-circle-bold />
+        <div i-solar-play-circle-bold hover="scale-110" duration-200 />
       </div>
     </div>
   </div>
