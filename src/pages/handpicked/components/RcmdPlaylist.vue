@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SwiperSlide } from 'swiper/vue'
 
-import ImgWidget from './components/ImgWidget.vue'
+import ImgWidget from './ImgWidget.vue'
 import { getRcmdPlaylist } from '~/apis/playList'
 
 const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
@@ -10,7 +10,7 @@ const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
 </script>
 
 <template>
-  <div mt-6>
+  <div>
     <div flex="~ justify-start" px-6>
       <div flex="~ items-center">
         <p font-extrabold class="text-hover">

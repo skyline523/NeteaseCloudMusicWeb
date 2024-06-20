@@ -30,7 +30,8 @@
     "vue-demi": "^0.14.7",
     "vue-hooks-plus": "^1.8.9",
     "vue-i18n": "^9.13.0",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue3-perfect-scrollbar": "^2.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.15.0",

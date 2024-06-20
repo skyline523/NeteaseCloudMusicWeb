@@ -47,6 +47,9 @@ dependencies:
   vue-router:
     specifier: ^4.3.2
     version: 4.3.2(vue@3.4.23)
+  vue3-perfect-scrollbar:
+    specifier: ^2.0.0
+    version: 2.0.0(vue@3.4.23)
 
 devDependencies:
   '@antfu/eslint-config':
@@ -6214,6 +6217,10 @@ packages:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
     dev: true
 
+  /perfect-scrollbar@1.5.5:
+    resolution: {integrity: sha512-dzalfutyP3e/FOpdlhVryN4AJ5XDVauVWxybSkLZmakFE2sS3y3pc4JnSprw8tGmHvkaG5Edr5T7LBTZ+WWU2g==}
+    dev: false
+
   /performance-now@2.1.0:
     resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
     dev: true
@@ -7991,6 +7998,15 @@ packages:
       vue: ^3.0.0
     dependencies:
       is-plain-object: 3.0.1
+      vue: 3.4.23(typescript@5.4.5)
+    dev: false
+
+  /vue3-perfect-scrollbar@2.0.0(vue@3.4.23):
+    resolution: {integrity: sha512-nSWVcRyViCgt0Pe3RhU3w/BllLcFSrEzYOGlRBjSyhVmiZlERHHziffW+9P8L0IMEWouC5t+uYrgNJGSAElqMA==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      perfect-scrollbar: 1.5.5
       vue: 3.4.23(typescript@5.4.5)
     dev: false
 

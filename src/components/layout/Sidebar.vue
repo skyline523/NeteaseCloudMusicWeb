@@ -23,7 +23,7 @@ const menus = ref<Menu[]>([
 </script>
 
 <template>
-  <div w-205px flex-shrink-0 bg="slate-50">
+  <div w-205px flex-shrink-0 bg="#f0f3f6">
     <div px-6 py-2>
       <RouterLink to="/">
         <img :src="logo" hover="drop-shadow" transition duration-300>

@@ -3,7 +3,7 @@ const loginModalVisible = ref(false)
 </script>
 
 <template>
-  <div mb-45px h-9 px-6 flex="~ justify-between items-center">
+  <div my-4 h-9 px-6 flex="~ justify-between items-center">
     <div flex="~ gap-x-2" h-full>
       <div
         cursor-pointer px-1
