@@ -35,7 +35,7 @@ const menus = ref<Menu[]>([
         :key="menu.path"
         :to="menu.path"
         flex="~ flex items-center gap-x-2"
-        hover="bg-slate-100"
+        hover="bg-#e4e8ec"
         transition="duration-300"
         rounded-lg px-3 py-2 text-gray-500
       >
