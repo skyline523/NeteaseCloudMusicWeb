@@ -5,7 +5,7 @@ import TopList from './components/TopList.vue'
 </script>
 
 <template>
-  <div space-y-6>
+  <div pb-4 space-y-6>
     <Banner />
 
     <RcmdPlaylist />

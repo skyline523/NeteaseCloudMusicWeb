@@ -10,8 +10,8 @@ const { data: topList } = useRequest(getTopListSum, {
 </script>
 
 <template>
-  <div px-6>
-    <div flex="~ justify-start">
+  <div px-5>
+    <div flex="~ justify-start" mb-3>
       <div flex="~ items-center">
         <p font-extrabold class="text-hover">
           榜单精选
@@ -25,23 +25,23 @@ const { data: topList } = useRequest(getTopListSum, {
         :key="item.id"
         rounded-lg bg-white p-6 shadow-md
       >
-        <div flex="~ items-center justify-between">
+        <div flex="~ items-center justify-between" mb-2>
           <span text="xl" font-bold>{{ item.name }}</span>
-          <span text="sm gray-400">{{ item.updateFrequency }}</span>
+          <span text="13px gray-300">{{ item.updateFrequency }}</span>
         </div>
-        <div flex="~ items-center">
-          <div h="78px" w="78px">
-            <img h="full" w="full" rounded-md object-contain :src="item.coverImgUrl">
+        <div h="78px" w="full" flex="~ items-center gap-x-3">
+          <div h="full" w="78px" shrink-0 overflow-hidden rounded-md>
+            <img h="full" w="full" object-contain :src="item.coverImgUrl">
           </div>
-          <div>
-            <div
+          <div h="full" w="full" flex="~ col justify-between">
+            <p
               v-for="(track, index) in item.tracks"
               :key="track.first"
-
-              flex="~"
+              text="start 15px gray-300"
+              class="line-clamp-1 tabular-nums"
             >
-              <span line-clamp-1>{{ index + 1 }}<span> {{ track.first }} - {{ track.second }}</span></span>
-            </div>
+              <span mr-2 text="gray-800">{{ index + 1 }}</span><span text="gray-800"> {{ track.first }}<span text="gray-300"> - {{ track.second }}</span></span>
+            </p>
           </div>
         </div>
       </div>
