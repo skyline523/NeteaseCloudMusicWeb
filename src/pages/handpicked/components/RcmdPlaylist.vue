@@ -13,7 +13,7 @@ const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
   <div>
     <div flex="~ justify-start" px-6>
       <div flex="~ items-center">
-        <p font-extrabold class="text-hover">
+        <p cursor-pointer font-extrabold>
           推荐歌单
         </p>
         <div i-solar-alt-arrow-right-linear />

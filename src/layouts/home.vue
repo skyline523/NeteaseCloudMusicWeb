@@ -8,7 +8,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     text="center gray-700"
     flex="~"
     position="fixed top-1/2 left-1/2"
-    border="~ border-gray-50 rounded-xl"
+    border="~ border-gray-50 rounded-lg"
     class="-translate-x-1/2 -translate-y-1/2"
   >
     <Sidebar />

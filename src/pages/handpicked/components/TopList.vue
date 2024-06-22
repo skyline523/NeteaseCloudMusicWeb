@@ -10,16 +10,16 @@ const { data: topList } = useRequest(getTopListSum, {
 </script>
 
 <template>
-  <div px-5>
-    <div flex="~ justify-start" mb-3>
+  <div>
+    <div flex="~ justify-start" px-6>
       <div flex="~ items-center">
-        <p font-extrabold class="text-hover">
+        <p cursor-pointer font-extrabold>
           榜单精选
         </p>
         <div i-solar-alt-arrow-right-linear />
       </div>
     </div>
-    <div v-if="topList" grid="~ cols-2 gap-6">
+    <div v-if="topList" grid="~ cols-2 gap-6" mt-2 px-6>
       <div
         v-for="item in topList.list"
         :key="item.id"
