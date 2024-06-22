@@ -34,5 +34,5 @@ export function getPlaylistDetail(id: number) {
  * @returns 所有榜单简要信息
  */
 export function getTopListSum() {
-  return request<TopListRes>('/toplist/detail')
+  return request<TopListRes>('/toplist')
 }

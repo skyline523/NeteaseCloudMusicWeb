@@ -34,6 +34,15 @@ export interface Playlist {
   tracks: {
     name: string
     id: number
+    al: {
+      id: number
+      name: string
+      picUrl: string
+    }
+    ar: {
+      id: number
+      name: string
+    }[]
   }[]
 }
 

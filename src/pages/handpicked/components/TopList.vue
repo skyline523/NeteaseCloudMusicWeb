@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TopListItem from './TopListItem.vue'
 import { getTopListSum } from '~/apis/playList'
 
 const { data: topList } = useRequest(getTopListSum, {
@@ -20,12 +21,18 @@ const { data: topList } = useRequest(getTopListSum, {
       </div>
     </div>
     <div v-if="topList" grid="~ cols-2 gap-6" mt-2 px-6>
-      <div
+      <TopListItem
+        v-for="item in topList.list"
+        :id="item.id"
+        :key="item.id"
+        :update-frequency="item.updateFrequency"
+      />
+      <!-- <div
         v-for="item in topList.list"
         :key="item.id"
-        rounded-lg bg-white p-6 shadow-md
+        rounded-lg bg-white p-5 shadow-c
       >
-        <div flex="~ items-center justify-between" mb-2>
+        <div flex="~ items-center justify-between" mb-3>
           <span text="xl" font-bold>{{ item.name }}</span>
           <span text="13px gray-300">{{ item.updateFrequency }}</span>
         </div>
@@ -37,14 +44,14 @@ const { data: topList } = useRequest(getTopListSum, {
             <p
               v-for="(track, index) in item.tracks"
               :key="track.first"
-              text="start 15px gray-300"
+              text="start 15px "
               class="line-clamp-1 tabular-nums"
             >
-              <span mr-2 text="gray-800">{{ index + 1 }}</span><span text="gray-800"> {{ track.first }}<span text="gray-300"> - {{ track.second }}</span></span>
+              <span mr-2 text="gray-800">{{ index + 1 }}</span><span text="gray-800"> {{ track.first }}<span text="slate-400/80"> - {{ track.second }}</span></span>
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
