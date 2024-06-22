@@ -25,7 +25,7 @@ const { data } = useRequest(getPlaylistDetail, {
 <template>
   <div
     v-if="data"
-    rounded-lg bg-white p-5 shadow-c
+    group rounded-lg bg-white p-5 shadow-c
   >
     <div flex="~ items-center justify-between" mb-3>
       <span text="xl" font-bold>{{ data.playlist.name }}</span>
