@@ -34,7 +34,7 @@ const { data } = useRequest(getPlaylistDetail, {
     <div h="80px" w="full" flex="~ items-center gap-x-6">
       <div
         h="full"
-        w="100px"
+        w="94px"
         border="rounded-md"
         relative shrink-0 overflow-hidden shadow-b
       >
