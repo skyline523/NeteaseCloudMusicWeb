@@ -4,7 +4,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 <template>
   <main
-    h-780px max-w-1220px w-full overflow-hidden shadow-gray-200 shadow-lg
+    relative h-780px max-w-1220px w-full overflow-hidden shadow-gray-200 shadow-lg
     text="center gray-700"
     flex="~"
     position="fixed top-1/2 left-1/2"
@@ -12,7 +12,11 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     class="-translate-x-1/2 -translate-y-1/2"
   >
     <Sidebar />
-    <div flex="1" w-0 bg="light-gray">
+    <div
+      z-0 w-0 pb-20
+      flex="1"
+      bg="light-gray"
+    >
       <Navbar />
       <PerfectScrollbar>
         <RouterView v-slot="{ Component }">
@@ -21,6 +25,12 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
           </KeepAlive>
         </RouterView>
       </PerfectScrollbar>
+
+      <div h-40 w-full />
+    </div>
+
+    <div position="fixed bottom-0 left-0" z-10 w-full>
+      <LeVideoPlayer />
     </div>
   </main>
 </template>

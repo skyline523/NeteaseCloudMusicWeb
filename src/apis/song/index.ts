@@ -1,4 +1,4 @@
-import type { RcmdNewSongsRes } from './types'
+import type { RcmdNewSongsRes, SongUrlRes } from './types'
 import { request } from '~/utils/request'
 
 /**
@@ -6,7 +6,9 @@ import { request } from '~/utils/request'
  * @param {number} id query参数 歌曲id
  * @param {string} level query参数 音质
  */
-export const songUrlApi = '/song/url/v1'
+export function getSongUrl(id: number) {
+  return request<SongUrlRes>(`/song/url?id=${id}`)
+}
 
 /**
  * 获取推荐新音乐列表
