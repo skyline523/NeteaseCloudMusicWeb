@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { Tab } from './types'
 
+defineOptions({
+  name: 'LeTabs',
+})
+
 const props = defineProps({
   items: {
     type: Array as PropType<Tab[]>,

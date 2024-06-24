@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { Swiper } from 'swiper/vue'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-import type { AutoplayOptions, PaginationOptions } from 'swiper/types'
+import { Autoplay, Grid, Navigation, Pagination } from 'swiper/modules'
+import type { AutoplayOptions, GridOptions, PaginationOptions } from 'swiper/types'
 
 import 'swiper/css'
+import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import arrowLeft from '~/assets/images/arrow-left.png'
 import arrowRight from '~/assets/images/arrow-right.png'
+
+defineOptions({
+  name: 'LeSwiper',
+})
 
 const props = withDefaults(defineProps<{
   /**
@@ -38,6 +43,10 @@ const props = withDefaults(defineProps<{
    * 自动播放
    */
   autoplay?: boolean | AutoplayOptions
+  /**
+   * 栅格
+   */
+  grid?: GridOptions
 }>(), {
   pagination: false,
   spaceBetween: 15,
@@ -56,6 +65,8 @@ const modules = computed(() => {
     m.push(Pagination)
   if (props.autoplay)
     m.push(Autoplay)
+  if (props.grid)
+    m.push(Grid)
 
   return m
 })
@@ -77,14 +88,15 @@ const modules = computed(() => {
     :speed="speed"
     :loop="loop"
     :autoplay="autoplay"
-    class="!static"
+    :grid="grid"
+    class="group !static"
   >
     <slot />
     <div
       class="prev-btn -translate-y-1/2"
       position="absolute top-1/2 left-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
-      hover="opacity-100"
+      group-hover="opacity-100"
       transition="duration-300"
     >
       <img :src="arrowLeft" h-full w-full>
@@ -93,7 +105,7 @@ const modules = computed(() => {
       class="next-btn -translate-y-1/2"
       position="absolute top-1/2 right-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
-      hover="opacity-100"
+      group-hover="opacity-100"
       transition="duration-300"
     >
       <img :src="arrowRight" h-full w-full>
