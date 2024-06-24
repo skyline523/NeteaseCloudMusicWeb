@@ -12,10 +12,14 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     class="-translate-x-1/2 -translate-y-1/2"
   >
     <Sidebar />
-    <div flex="1" w-0 bg="#f7f9fc">
+    <div flex="1" w-0 bg="light-gray">
       <Navbar />
       <PerfectScrollbar>
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+          <KeepAlive>
+            <component :is="Component" />
+          </KeepAlive>
+        </RouterView>
       </PerfectScrollbar>
     </div>
   </main>

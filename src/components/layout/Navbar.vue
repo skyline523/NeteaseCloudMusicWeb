@@ -27,7 +27,7 @@ const loginModalVisible = ref(false)
           placeholder="搜索歌曲、歌手、用户等......"
           w-200px outline-none
           text="sm"
-          bg="#f7f9fc"
+          bg="light-gray"
         >
       </div>
     </div>

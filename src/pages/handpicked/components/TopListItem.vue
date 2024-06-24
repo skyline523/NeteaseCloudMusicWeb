@@ -66,7 +66,7 @@ const { data } = useRequest(getPlaylistDetail, {
           <span mr-2 text="gray-800">{{ tIndex + 1 }} </span>
           <span text="gray-800">
             {{ track.name }}
-            <span secondary-text> -
+            <span text="txt-gray"> -
               <LeArtistText :artists="track.ar" />
             </span>
           </span>
