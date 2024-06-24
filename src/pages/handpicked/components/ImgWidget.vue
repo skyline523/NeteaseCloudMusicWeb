@@ -54,14 +54,14 @@ const { data: listDetail } = useRequest(getPlaylistDetail, {
           text="sm"
           flex="~ gap-x-1"
         >
-          <span text="gray-300">{{ index + 1 }}</span>
-          <span text="gray-200" line-clamp-1>{{ track.name }}</span>
+          <span text="gray-200">{{ index + 1 }}</span>
+          <span text="gray-100" line-clamp-1>{{ track.name }}</span>
         </div>
       </div>
       <div
         flex="~ shrink-0 justify-end items-end"
         text="40px"
-        class="swipe-content-play h-full w-[40%] opacity-0"
+        class="swipe-content-play h-full w-[30%] opacity-0"
         transition="opacity duration-300"
       >
         <div i-solar-play-circle-bold hover="scale-110" duration-200 />

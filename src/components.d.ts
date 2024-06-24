@@ -11,6 +11,7 @@ declare module 'vue' {
     AQrcode: typeof import('ant-design-vue/es')['QRCode']
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
+    LeArtistText: typeof import('./components/LeArtistText/index.vue')['default']
     LeSwiper: typeof import('./components/LeSwiper/index.vue')['default']
     LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LoginModal: typeof import('./components/layout/LoginModal.vue')['default']

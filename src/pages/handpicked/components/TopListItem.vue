@@ -58,19 +58,16 @@ const { data } = useRequest(getPlaylistDetail, {
       </div>
       <div h="full" w="full" flex="~ col justify-between">
         <p
-          v-for="(track, index) in data.playlist.tracks.slice(0, 3)"
+          v-for="(track, tIndex) in data.playlist.tracks.slice(0, 3)"
           :key="track.id"
           text="start 15px slate-400/80"
           class="line-clamp-1 tabular-nums"
         >
-          <span mr-2 text="gray-800">{{ index + 1 }} </span>
+          <span mr-2 text="gray-800">{{ tIndex + 1 }} </span>
           <span text="gray-800">
             {{ track.name }}
-            <span text="slate-400/80"> -
-              <span v-for="(item, index) in track.ar" :key="item.id">
-                <span>{{ item.name }}</span>
-                <span v-if="index < track.ar.length - 1">/</span>
-              </span>
+            <span secondary-text> -
+              <LeArtistText :artists="track.ar" />
             </span>
           </span>
         </p>

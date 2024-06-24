@@ -23,9 +23,11 @@ const loginModalVisible = ref(false)
           <div i-solar-magnifer-linear />
         </div>
         <input
-          type="text" placeholder="搜索歌曲、歌手、用户等......"
+          type="text"
+          placeholder="搜索歌曲、歌手、用户等......"
           w-200px outline-none
           text="sm"
+          bg="#f7f9fc"
         >
       </div>
     </div>
