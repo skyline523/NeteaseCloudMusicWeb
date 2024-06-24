@@ -33,9 +33,7 @@ const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
           :key="list.id"
           class="swipe roundex-xl cursor-pointer overflow-hidden"
         >
-          <img
-            h-272px object-cover border="0 rounded-xl" :src="list.picUrl"
-          >
+          <LeImage h-272px object-cover border="0 rounded-xl" :src="list.picUrl" />
           <ImgWidget
             :id="list.id"
             :img-url="list.picUrl"

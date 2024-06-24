@@ -36,7 +36,7 @@ const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
             flex="~"
             hover="bg-white shadow-c"
           >
-            <img :src="item.picUrl" h-16 w-16 rounded-md object-cover>
+            <LeImage :src="item.picUrl" h-16 w-16 rounded-md object-cover />
             <div ml-3 h-full flex="~ col items-start justify-center gap-y-1">
               <div>{{ item.name }}</div>
               <div text="xs txt-gray">

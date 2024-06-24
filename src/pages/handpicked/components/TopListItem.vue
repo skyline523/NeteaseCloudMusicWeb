@@ -38,23 +38,23 @@ const { data } = useRequest(getPlaylistDetail, {
         border="rounded-md"
         relative shrink-0 overflow-hidden shadow-b
       >
-        <img
+        <LeImage
           z-10 h-80px w-80px rounded-md object-contain
           position="absolute bottom-0"
           :src="albumImgList[0]"
-        >
-        <img
+        />
+        /<LeImage
           class="z-5"
           h-60px w-60px rounded-md object-contain
           position="absolute bottom-0 left-7"
           :src="albumImgList[1]"
-        >
-        <img
+        />
+        <LeImage
           class="z-2"
           h-40px w-40px rounded-md object-contain
           position="absolute bottom-0 left-14"
           :src="albumImgList[2]"
-        >
+        />
       </div>
       <div h="full" w="full" flex="~ col justify-between">
         <p

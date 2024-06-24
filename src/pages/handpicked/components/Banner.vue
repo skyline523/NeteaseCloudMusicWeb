@@ -28,7 +28,7 @@ const { data: bannersPart, loading } = useRequest(getHomeBanner)
             v-for="banner in bannersPart.banners"
             :key="banner.encodeId"
           >
-            <img h-170px w-full object-cover border="~ 1 rounded-xl" :src="banner.imageUrl">
+            <LeImage h-170px w-full object-cover border="~ 1 rounded-xl" :src="banner.imageUrl" />
             <div
               position="absolute right-1 bottom-2"
               text="gray-500 xs"
