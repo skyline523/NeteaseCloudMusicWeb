@@ -1,3 +1,5 @@
+import type { Artist } from '../artist/types'
+
 export interface RecommendListRes {
   code: number
   category: number
@@ -39,10 +41,7 @@ export interface Playlist {
       name: string
       picUrl: string
     }
-    ar: {
-      id: number
-      name: string
-    }[]
+    ar: Artist[]
   }[]
 }
 

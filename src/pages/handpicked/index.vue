@@ -2,6 +2,7 @@
 import Banner from './components/Banner.vue'
 import RcmdPlaylist from './components/RcmdPlaylist.vue'
 import TopList from './components/TopList.vue'
+import RcmdNewSong from './components/RcmdNewSong.vue'
 </script>
 
 <template>
@@ -9,6 +10,8 @@ import TopList from './components/TopList.vue'
     <Banner />
 
     <RcmdPlaylist />
+
+    <RcmdNewSong />
 
     <TopList />
   </div>
