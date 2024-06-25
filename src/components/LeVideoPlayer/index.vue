@@ -10,11 +10,13 @@ const { data } = useRequest(getSongUrl, {
 })
 
 const audioRef = ref<HTMLAudioElement>()
+const duration = ref<number>(0) // 音频总时长
+const currentTime = ref<number>(0) // 音频当前播放时长
+const isPlaying = ref(false) // 是否正在播放
 
-const duration = ref<number>(0)
-const currentTime = ref<number>(0)
-// const throttledCurrentTime = refThrottled<number>(currentTime, 300)
-const isPlaying = ref(false)
+/**
+ * 音频的播放和暂停
+ */
 function handlePlayAnPause() {
   if (audioRef.value) {
     if (isPlaying.value)
@@ -22,33 +24,86 @@ function handlePlayAnPause() {
     else audioRef.value.play()
   }
 }
-function onUpdateCurrentTime() {
+
+/**
+ * 更新音频当前播放时长
+ */
+function updateCurrentTime() {
   if (audioRef.value)
     currentTime.value = audioRef.value.currentTime
 }
-function onUpdateDuration() {
+
+/**
+ * 更新音频总时长
+ */
+function updateDuration() {
   if (audioRef.value)
     duration.value = audioRef.value.duration
 }
 
+/**
+ * 格式化时长为 00:00
+ * @param time 时长
+ */
 function formatTime(time: number) {
   const minutes = Math.floor(time / 60)
   const seconds = Math.floor(time % 60)
   return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 }
+
+// 格式化后的音频总时长
 const formattedCurrentTime = computed(() => formatTime(currentTime.value))
+// 格式化后的音频当前播放时长
 const formattedDuration = computed(() => formatTime(duration.value))
 
-const activeWidth = computed(() => {
+/**
+ * 进度条内容
+ */
+// 进度条进度
+const progressPercentage = computed(() => {
   if (currentTime.value === 0 && duration.value === 0)
     return 0
   return (currentTime.value / duration.value) * 100
 })
 
-function handleClickBar(val: number) {
+/**
+ * 进度条组件 change 事件
+ * 改变进度条进度时触发，包括点击和拖拽
+ *
+ * @param val 进度条百分比小数
+ */
+function handleChangeBarWidth(val: number) {
   if (audioRef.value)
     audioRef.value.currentTime = duration.value * (val / 100)
 }
+
+// 添加事件监听器
+onMounted(() => {
+  if (audioRef.value) {
+    audioRef.value.addEventListener('timeupdate', updateCurrentTime)
+    audioRef.value.addEventListener('loadedmetadata', updateDuration)
+    audioRef.value.addEventListener('play', () => {
+      isPlaying.value = true
+    })
+    audioRef.value.addEventListener('pause', () => {
+      isPlaying.value = false
+    })
+  }
+})
+
+// 清理事件监听器
+onUnmounted(() => {
+  if (audioRef.value) {
+    audioRef.value.removeEventListener('timeupdate', updateCurrentTime)
+    audioRef.value.removeEventListener('loadedmetadata', updateDuration)
+    audioRef.value.removeEventListener('play', () => {
+      isPlaying.value = true
+    })
+    audioRef.value.removeEventListener('pause', () => {
+      isPlaying.value = false
+    })
+  }
+})
 </script>
 
 <template>
@@ -80,8 +135,8 @@ function handleClickBar(val: number) {
       <div flex="~ justify-center items-center gap-x-2" mt-1>
         <span text="xs gray-400/70" transform="scale-75">{{ formattedCurrentTime }}</span>
         <ProgressBar
-          :active-width="activeWidth"
-          @click-bar="handleClickBar"
+          :percentage="progressPercentage"
+          @change="handleChangeBarWidth"
         />
         <span text="xs gray-400/70" transform="scale-75">{{ formattedDuration }}</span>
       </div>
@@ -93,8 +148,8 @@ function handleClickBar(val: number) {
     <audio
       ref="audioRef"
       :src="data?.data[0].url"
-      @timeupdate="onUpdateCurrentTime"
-      @loadedmetadata="onUpdateDuration"
+      @timeupdate="updateCurrentTime"
+      @loadedmetadata="updateDuration"
       @play="isPlaying = true"
       @pause="isPlaying = false"
     />

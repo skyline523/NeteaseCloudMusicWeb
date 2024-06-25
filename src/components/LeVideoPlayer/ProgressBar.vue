@@ -4,46 +4,61 @@ defineOptions({
 })
 
 defineProps({
-  activeWidth: {
+  percentage: {
     type: Number,
     default: 0,
   },
 })
 
-const emits = defineEmits(['clickBar'])
+const emits = defineEmits(['change'])
 
-const progressRef = ref<HTMLElement>()
+const progressRef = ref<HTMLElement | null>()
 
-function setWidth(e: MouseEvent) {
-  const mouseClientX = e.clientX // 鼠标点击位置横坐标(以根元素左侧)
-  const rootLeft = getElementLeft(progressRef.value!) // 元素距离根元素左侧的距离
-  const mouseLeft = mouseClientX - rootLeft // 鼠标点击位置距离元素左侧距离
-  const elWidth = progressRef.value?.offsetWidth || 0
+/**
+ * 设置进度条长度
+ * @param e 鼠标事件
+ */
+function updateProgressBarWidth(e: MouseEvent) {
+  const mouseX = e.clientX // 鼠标点击位置横坐标(以根元素左侧)
+  const progressBarLeft = getElementLeft(progressRef.value!) // 元素距离根元素左侧的距离
+  const clickPosition = mouseX - progressBarLeft // 鼠标点击位置距离元素左侧距离
+  const progressBarWidth = progressRef.value?.offsetWidth || 0
 
-  const progressWidth = mouseLeft >= elWidth ? 100 : (mouseLeft / elWidth) * 100
+  const newPercentage = clickPosition >= progressBarWidth ? 100 : (clickPosition / progressBarWidth) * 100
 
-  emits('clickBar', progressWidth)
+  emits('change', newPercentage)
 }
 
-function handleClick(e: MouseEvent) {
-  setWidth(e)
-  // console.log(mouseLeft, progressRef.value?.offsetWidth)
+/**
+ * 处理点击进度条事件
+ * @param event 鼠标事件
+ */
+function handleClickBar(event: MouseEvent) {
+  updateProgressBarWidth(event)
 }
 
-function handleDrag() {
+/**
+ * 处理进度条 mousedown事件，拖动进度条
+ */
+function handleDragBar() {
   document.onmousemove = (e) => {
-    setWidth(e)
+    updateProgressBarWidth(e)
   }
 
   document.body.onselectstart = () => false
 
   document.onmouseup = (e) => {
-    setWidth(e)
+    updateProgressBarWidth(e)
 
     document.onmousemove = document.onmouseup = document.body.onselectstart = null
   }
 }
 
+/**
+ * 获取元素距离根元素的左侧距离
+ * @param el HTML 元素
+ * @returns 距离左侧的距离
+ */
 function getElementLeft(el: HTMLElement) {
   let left = 0
   let currentElement: HTMLElement | null = el
@@ -55,6 +70,11 @@ function getElementLeft(el: HTMLElement) {
 
   return left
 }
+
+// 清理事件监听器
+onUnmounted(() => {
+  document.onmousemove = document.onmouseup = document.body.onselectstart = null
+})
 </script>
 
 <template>
@@ -64,7 +84,7 @@ function getElementLeft(el: HTMLElement) {
     flex="~ items-center"
     w-316px cursor-pointer rounded-full py-1
     class="group"
-    @click="handleClick"
+    @click="handleClickBar"
   >
     <div bg="#dadcdf" z-0 h-1 w-full rounded-full />
     <div
@@ -72,7 +92,7 @@ function getElementLeft(el: HTMLElement) {
       position="absolute left-0 top-0"
       transform="translate-y-1"
       z-10 h-1 w-full rounded-full
-      :style="{ width: `${activeWidth}%` }"
+      :style="{ width: `${percentage}%` }"
     >
       <div
         position="absolute right--6px bottom--4px"
@@ -80,7 +100,7 @@ function getElementLeft(el: HTMLElement) {
         bg="white"
         h-3 w-3 cursor-pointer opacity-0 shadow
         class="duration-200 group-hover:opacity-100"
-        @mousedown.self="handleDrag"
+        @mousedown.self="handleDragBar"
       />
     </div>
   </div>
