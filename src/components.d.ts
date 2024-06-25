@@ -18,6 +18,7 @@ declare module 'vue' {
     LeVideoPlayer: typeof import('./components/LeVideoPlayer/index.vue')['default']
     LoginModal: typeof import('./components/layout/LoginModal.vue')['default']
     Navbar: typeof import('./components/layout/Navbar.vue')['default']
+    ProgressBar: typeof import('./components/LeVideoPlayer/ProgressBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./components/layout/Sidebar.vue')['default']

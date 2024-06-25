@@ -21,6 +21,7 @@ export default defineConfig({
   rules: [
     ['shadow-c', { 'box-shadow': 'rgba(145, 158, 171, 0.12) 0px 12px 14px -10px' }],
     ['shadow-b', { 'box-shadow': '0px 12px 10px -10px rgba(0, 0, 0, 0.3)' }],
+    ['shadow-border', { 'box-shadow': 'rgba(0, 0, 0, 0.04) 0px 5px 22px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px' }],
   ],
   shortcuts: [
     ['btn', 'px-4 py-1 rounded inline-block bg-teal-700 text-white cursor-pointer !outline-none hover:bg-teal-800 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
