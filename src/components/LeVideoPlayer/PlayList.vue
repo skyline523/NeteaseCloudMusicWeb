@@ -6,15 +6,28 @@ defineOptions({
   name: 'PlayList',
 })
 
-const modelValue = defineModel({ type: Boolean })
-
 const playerStore = usePlayerStore()
 const { playlist } = storeToRefs(playerStore)
+
+const playListVisible = ref(false)
 </script>
 
 <template>
+  <a-tooltip placement="bottom" color="#ffffff">
+    <template #title>
+      <span text-gray-500>播放列表</span>
+    </template>
+    <div
+      i-solar-playlist-linear
+      cursor-pointer duration-200
+      text="xl"
+      hover="text-gray-600"
+      @click="playListVisible = !playListVisible"
+    />
+  </a-tooltip>
+
   <a-drawer
-    v-model:open="modelValue"
+    v-model:open="playListVisible"
     get-container=".drawerContainer"
     placement="right"
     root-class-name="absolute focus-visible:outline-none"

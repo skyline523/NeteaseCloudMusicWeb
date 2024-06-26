@@ -20,6 +20,7 @@ const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
     <div relative mt-2 px-6>
       <LeSwiper
         v-if="rcmdNewSongs"
+        class="pb-2"
         :slides-per-view="2"
         :grid="{
           rows: 3,

@@ -96,9 +96,26 @@ function onProgress() {
   catch (e) {}
 }
 
+/**
+ * 音量组件
+ */
+const volume = ref(100)
+const oldVolume = ref(100)
+
+function handleChangeVolume(newVol: number, oldVol: number) {
+  if (audioRef.value) {
+    volume.value = newVol
+    oldVolume.value = oldVol
+
+    audioRef.value.volume = newVol / 100
+  }
+}
+
 // 添加事件监听器
 onMounted(() => {
   if (audioRef.value) {
+    volume.value = audioRef.value.volume * 100
+
     audioRef.value.addEventListener('timeupdate', updateCurrentTime)
     audioRef.value.addEventListener('loadedmetadata', updateDuration)
     audioRef.value.addEventListener('play', () => {
@@ -123,8 +140,6 @@ onUnmounted(() => {
     })
   }
 })
-
-const playListVisible = ref(false)
 </script>
 
 <template>
@@ -134,7 +149,8 @@ const playListVisible = ref(false)
     bg="white"
     flex="~ justify-between items-center"
   >
-    <div max-w-320px w-full px-7 flex="~ items-center gap-x-2">
+    <!-- 播放器左侧信息 -->
+    <div v-if="currentSong" max-w-320px w-full px-7 flex="~ items-center gap-x-2">
       <div
         relative h-15 w-15
         flex="~ shrink-0"
@@ -146,14 +162,15 @@ const playListVisible = ref(false)
           class="absolute left-0 top-0 h-full w-full"
         />
         <LeImage
-          :src="currentSong?.al.picUrl!"
+
+          :src="currentSong.al.picUrl"
           class="absolute left-50% top-50% h-68% w-68% translate-x--50% translate-y--50% rounded-full"
         />
       </div>
       <div flex="~ col gap-y-1">
         <div text="sm txt-gray" line-clamp-1>
-          <span text="black">{{ currentSong?.name }} - </span>
-          <LeArtistText :artists="currentSong?.ar!" class="text-xs" />
+          <span text="black">{{ currentSong.name }} - </span>
+          <LeArtistText :artists="currentSong.ar" class="text-xs" />
         </div>
         <div flex="~ items-center gap-x-4" text="gray-500/80" px-1>
           <div i-solar-chat-round-call-broken />
@@ -161,6 +178,8 @@ const playListVisible = ref(false)
         </div>
       </div>
     </div>
+
+    <!-- 播放器中控 -->
     <div flex="~ col items-center" h-full py-3>
       <div flex="~ items-center gap-x-6">
         <div i-solar-heart-linear text="gray-500/80" />
@@ -183,10 +202,13 @@ const playListVisible = ref(false)
         <span text="xs gray-400/70" transform="scale-75">{{ formattedDuration }}</span>
       </div>
     </div>
+
+    <!-- 播放器右侧操作 -->
     <div max-w-320px px-7 flex="~ gap-x-4 justify-end" text="gray-500/80" w="full">
-      <div i-solar-volume-small-outline text="xl" />
-      <div i-solar-playlist-linear cursor-pointer text="xl" @click="playListVisible = !playListVisible" />
+      <Volumn :volume="volume" :old-volume="oldVolume" @change="handleChangeVolume" />
+      <PlayList />
     </div>
+
     <audio
       ref="audioRef"
       :src="songUrl(currentSong?.id!)"
@@ -195,7 +217,8 @@ const playListVisible = ref(false)
       @progress="onProgress"
     />
 
-    <PlayList v-model="playListVisible" />
+    <!-- 播放列表 -->
+    <!-- <PlayList v-model="playListVisible" /> -->
   </div>
 </template>
 
