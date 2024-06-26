@@ -8,25 +8,33 @@ defineOptions({
 })
 
 const playerStore = usePlayerStore()
-const { currentSong } = storeToRefs(playerStore)
+const { currentSong, playState } = storeToRefs(playerStore)
 
 const audioRef = ref<HTMLAudioElement>()
 const duration = ref<number>(0) // 音频总时长
 const currentTime = ref<number>(0) // 音频当前播放时长
 const isPlaying = ref(false) // 是否正在播放
 
-watch(currentSong, (newSong, oldSong) => {
+watch(playState, () => {
   if (audioRef.value) {
-    if (!newSong || (newSong && newSong.id === oldSong?.id)) {
-      return false
-    }
-    else {
-      nextTick(() => {
-        audioRef.value?.play()
-      })
-    }
+    if (playState.value)
+      nextTick(() => audioRef.value?.play())
+    else nextTick(() => audioRef.value?.pause())
   }
-}, { deep: true })
+})
+
+// watch(currentSong, (newSong, oldSong) => {
+//   if (audioRef.value) {
+//     if (!newSong || (newSong && newSong.id === oldSong?.id)) {
+//       return false
+//     }
+//     else {
+//       nextTick(() => {
+//         audioRef.value?.play()
+//       })
+//     }
+//   }
+// }, { deep: true })
 
 /**
  * 音频的播放和暂停
