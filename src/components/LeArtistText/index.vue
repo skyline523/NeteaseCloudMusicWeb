@@ -14,7 +14,7 @@ defineProps({
 </script>
 
 <template>
-  <span v-for="(item, index) in artists" :key="item.id">
+  <span v-for="(item, index) in artists" v-bind="$attrs" :key="item.id">
     <span>{{ item.name }}</span>
     <span v-if="index < artists.length - 1">/</span>
   </span>

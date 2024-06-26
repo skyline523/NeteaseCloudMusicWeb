@@ -2,6 +2,8 @@
 import { SwiperSlide } from 'swiper/vue'
 import { getRcmdNewSongs } from '~/apis/song'
 
+const { setSong } = usePlayerStore()
+
 const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
 </script>
 
@@ -36,7 +38,11 @@ const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
             flex="~"
             hover="bg-white shadow-c"
           >
-            <LeImage :src="item.picUrl" h-16 w-16 rounded-md object-cover />
+            <LeImage
+              :src="item.picUrl"
+              h-16 w-16 rounded-md object-cover
+              @click="setSong(item.id)"
+            />
             <div ml-3 h-full flex="~ col items-start justify-center gap-y-1">
               <div>{{ item.name }}</div>
               <div text="xs txt-gray">

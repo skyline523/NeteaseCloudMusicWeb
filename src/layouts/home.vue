@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+
+const playerStore = usePlayerStore()
+const { playlist } = storeToRefs(playerStore)
+
+const hasPlaylist = computed(() => playlist.value && playlist.value.length > 0)
 </script>
 
 <template>
   <main
+    class="drawerContainer"
     flex="~"
     text="center gray-700"
     border="~ border-gray-50 rounded-lg"
@@ -12,9 +19,11 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
   >
     <Sidebar />
     <div
-      z-0 w-0 pb-20
+      z-0 w-0
       flex="1"
       bg="light-gray"
+      transition="padding duration-200"
+      :p="hasPlaylist ? 'b-20' : 'b-0'"
     >
       <Navbar />
       <PerfectScrollbar :wheel-speed="2">
@@ -27,8 +36,14 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
       <div h-40 w-full />
     </div>
+    <!-- :style="{ transform: `translateY(${hasPlayList ? 0 : '100%'})` }" -->
 
-    <div position="absolute bottom-0 left-0" z-10 w-full>
+    <div
+      position="absolute bottom-0 left-0"
+      transition="transform duration-200"
+      z-10 w-full
+      :style="{ transform: `translateY(${hasPlaylist ? 0 : '100%'})` }"
+    >
       <LeVideoPlayer />
     </div>
   </main>

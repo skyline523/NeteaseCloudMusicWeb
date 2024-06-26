@@ -1,18 +1,32 @@
 <script setup lang="ts">
-import { getSongUrl } from '~/apis/song'
+import { storeToRefs } from 'pinia'
+import { songUrl } from '~/apis/song'
+import record from '~/assets/images/record.png'
 
 defineOptions({
   name: 'LeVideoPlayer',
 })
 
-const { data } = useRequest(getSongUrl, {
-  defaultParams: [2025068889],
-})
+const playerStore = usePlayerStore()
+const { currentSong } = storeToRefs(playerStore)
 
 const audioRef = ref<HTMLAudioElement>()
 const duration = ref<number>(0) // 音频总时长
 const currentTime = ref<number>(0) // 音频当前播放时长
 const isPlaying = ref(false) // 是否正在播放
+
+watch(currentSong, (newSong, oldSong) => {
+  if (audioRef.value) {
+    if (!newSong || (newSong && newSong.id === oldSong?.id)) {
+      return false
+    }
+    else {
+      nextTick(() => {
+        audioRef.value?.play()
+      })
+    }
+  }
+}, { deep: true })
 
 /**
  * 音频的播放和暂停
@@ -120,6 +134,8 @@ onUnmounted(() => {
     })
   }
 })
+
+const playListVisible = ref(false)
 </script>
 
 <template>
@@ -129,11 +145,31 @@ onUnmounted(() => {
     bg="white"
     flex="~ justify-between items-center"
   >
-    <div px-7>
-      <div><span>Duvet</span></div>
-      <div flex="~ items-center gap-x-4" text="gray-500/80">
-        <div i-solar-chat-round-call-broken />
-        <div i-solar-archive-down-minimlistic-linear />
+    <div max-w-320px w-full px-7 flex="~ items-center gap-x-2">
+      <div
+        relative h-15 w-15
+        flex="~ shrink-0"
+        class="record"
+        :style="{ animationPlayState: isPlaying ? 'running' : 'paused' }"
+      >
+        <LeImage
+          :src="record"
+          class="absolute left-0 top-0 h-full w-full"
+        />
+        <LeImage
+          :src="currentSong?.al.picUrl!"
+          class="absolute left-50% top-50% h-68% w-68% translate-x--50% translate-y--50% rounded-full"
+        />
+      </div>
+      <div flex="~ col gap-y-1">
+        <div text="sm txt-gray" line-clamp-1>
+          <span text="black">{{ currentSong?.name }} - </span>
+          <LeArtistText :artists="currentSong?.ar!" class="text-xs" />
+        </div>
+        <div flex="~ items-center gap-x-4" text="gray-500/80" px-1>
+          <div i-solar-chat-round-call-broken />
+          <div i-solar-archive-down-minimlistic-linear />
+        </div>
       </div>
     </div>
     <div flex="~ col items-center" h-full py-3>
@@ -158,16 +194,33 @@ onUnmounted(() => {
         <span text="xs gray-400/70" transform="scale-75">{{ formattedDuration }}</span>
       </div>
     </div>
-    <div px-7 flex="~ gap-x-4" text="gray-500/80">
+    <div max-w-320px px-7 flex="~ gap-x-4 justify-end" text="gray-500/80" w="full">
       <div i-solar-volume-small-outline text="xl" />
-      <div i-solar-playlist-linear text="xl" />
+      <div i-solar-playlist-linear cursor-pointer text="xl" @click="playListVisible = !playListVisible" />
     </div>
     <audio
       ref="audioRef"
-      :src="data?.data[0].url"
+      :src="songUrl(currentSong?.id!)"
       @timeupdate="updateCurrentTime"
       @loadedmetadata="updateDuration"
       @progress="onProgress"
     />
+
+    <PlayList v-model="playListVisible" />
   </div>
 </template>
+
+<style>
+.record {
+  animation: recordPlaying 30s linear infinite;
+}
+
+@keyframes recordPlaying {
+  0% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(370deg);
+  }
+}
+</style>

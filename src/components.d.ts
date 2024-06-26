@@ -7,17 +7,20 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ADrawer: typeof import('ant-design-vue/es')['Drawer']
     AModal: typeof import('ant-design-vue/es')['Modal']
     AQrcode: typeof import('ant-design-vue/es')['QRCode']
     ASkeleton: typeof import('ant-design-vue/es')['Skeleton']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     LeArtistText: typeof import('./components/LeArtistText/index.vue')['default']
     LeImage: typeof import('./components/LeImage/index.vue')['default']
+    LeMarqueeText: typeof import('./components/LeMarqueeText/index.vue')['default']
     LeSwiper: typeof import('./components/LeSwiper/index.vue')['default']
     LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LeVideoPlayer: typeof import('./components/LeVideoPlayer/index.vue')['default']
     LoginModal: typeof import('./components/layout/LoginModal.vue')['default']
     Navbar: typeof import('./components/layout/Navbar.vue')['default']
+    PlayList: typeof import('./components/LeVideoPlayer/PlayList.vue')['default']
     ProgressBar: typeof import('./components/LeVideoPlayer/ProgressBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
