@@ -65,6 +65,7 @@ const progressPercentage = computed(() => {
     return 0
   return (currentTime.value / duration.value) * 100
 })
+const bufferProgressPercentage = ref<number>(0) // 缓冲进度条
 
 /**
  * 进度条组件 change 事件
@@ -75,6 +76,21 @@ const progressPercentage = computed(() => {
 function handleChangeBarWidth(val: number) {
   if (audioRef.value)
     audioRef.value.currentTime = duration.value * (val / 100)
+}
+
+function onProgress() {
+  const audio = audioRef.value
+  try {
+    if (audio) {
+      if (audio.buffered.length > 0) {
+        const duration = audio.duration
+        let buffered = 0
+        buffered = audio.buffered.end(0) > duration ? duration : audio.buffered.end(0)
+        bufferProgressPercentage.value = (buffered / duration) * 100
+      }
+    }
+  }
+  catch (e) {}
 }
 
 // 添加事件监听器
@@ -136,6 +152,7 @@ onUnmounted(() => {
         <span text="xs gray-400/70" transform="scale-75">{{ formattedCurrentTime }}</span>
         <ProgressBar
           :percentage="progressPercentage"
+          :buffer-percentage="bufferProgressPercentage"
           @change="handleChangeBarWidth"
         />
         <span text="xs gray-400/70" transform="scale-75">{{ formattedDuration }}</span>
@@ -150,8 +167,7 @@ onUnmounted(() => {
       :src="data?.data[0].url"
       @timeupdate="updateCurrentTime"
       @loadedmetadata="updateDuration"
-      @play="isPlaying = true"
-      @pause="isPlaying = false"
+      @progress="onProgress"
     />
   </div>
 </template>

@@ -8,6 +8,10 @@ defineProps({
     type: Number,
     default: 0,
   },
+  bufferPercentage: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const emits = defineEmits(['change'])
@@ -86,7 +90,14 @@ onUnmounted(() => {
     class="group"
     @click="handleClickBar"
   >
-    <div bg="#dadcdf" z-0 h-1 w-full rounded-full />
+    <div bg="#e5e6e8" z-0 h-1 w-full rounded-full />
+    <div
+      bg="#dadcdf"
+      position="absolute left-0 top-0"
+      transform="translate-y-1"
+      z-0 h-1 rounded-full
+      :style="{ width: `${bufferPercentage}%` }"
+    />
     <div
       bg="netease-red/80"
       position="absolute left-0 top-0"
