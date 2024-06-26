@@ -13,6 +13,7 @@ export default defineConfig({
   theme: {
     colors: {
       'netease-red': '#fc3b57',
+      'lighter-gray': '#f2f3f4',
       'light-gray': '#f7f9fc',
       'deep-gray': '#f0f3f6',
       'txt-gray': 'rgb(107 114 128 / 0.8)',

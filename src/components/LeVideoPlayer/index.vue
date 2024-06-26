@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { songUrl } from '~/apis/song'
+import { formatTime } from '~/utils'
 import record from '~/assets/images/record.png'
 
 defineOptions({
@@ -15,6 +16,9 @@ const duration = ref<number>(0) // 音频总时长
 const currentTime = ref<number>(0) // 音频当前播放时长
 const isPlaying = ref(false) // 是否正在播放
 
+/**
+ * 监听播放状态来判断播放还是暂停
+ */
 watch(playState, () => {
   if (audioRef.value) {
     if (playState.value)
@@ -22,19 +26,6 @@ watch(playState, () => {
     else nextTick(() => audioRef.value?.pause())
   }
 })
-
-// watch(currentSong, (newSong, oldSong) => {
-//   if (audioRef.value) {
-//     if (!newSong || (newSong && newSong.id === oldSong?.id)) {
-//       return false
-//     }
-//     else {
-//       nextTick(() => {
-//         audioRef.value?.play()
-//       })
-//     }
-//   }
-// }, { deep: true })
 
 /**
  * 音频的播放和暂停
@@ -61,16 +52,6 @@ function updateCurrentTime() {
 function updateDuration() {
   if (audioRef.value)
     duration.value = audioRef.value.duration
-}
-
-/**
- * 格式化时长为 00:00
- * @param time 时长
- */
-function formatTime(time: number) {
-  const minutes = Math.floor(time / 60)
-  const seconds = Math.floor(time % 60)
-  return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 }
 
 // 格式化后的音频总时长

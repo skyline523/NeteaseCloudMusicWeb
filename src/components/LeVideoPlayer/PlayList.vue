@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { formatTime } from '~/utils'
+
+defineOptions({
+  name: 'PlayList',
+})
+
 const modelValue = defineModel({ type: Boolean })
+
+const playerStore = usePlayerStore()
+const { playlist } = storeToRefs(playerStore)
 </script>
 
 <template>
@@ -11,6 +21,7 @@ const modelValue = defineModel({ type: Boolean })
     :closable="false"
     :mask-style="{ background: 'transparent' }"
     :header-style="{ textAlign: 'start' }"
+    :body-style="{ padding: 0 }"
     :content-wrapper-style="{
       borderRadius: '12px 0 0 12px',
       overflow: 'hidden',
@@ -33,8 +44,26 @@ const modelValue = defineModel({ type: Boolean })
         <span>清空</span>
       </div>
     </template>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
+    <div>
+      <div
+        v-for="song in playlist"
+        :key="song.id"
+        flex="~ items-center gap-x-2"
+        p="x-4 y-2"
+        transition="background-color duration-200"
+        hover="bg-lighter-gray"
+      >
+        <LeImage :src="song.al.picUrl" class="h-12 w-12 rounded-lg" />
+        <div flex="~ col items-start gap-y-2px 1">
+          <span text="sm">{{ song.name }}</span>
+          <div>
+            <LeArtistText :artists="song.ar" text="txt-gray xs" />
+          </div>
+        </div>
+        <div>
+          <span text="txt-gray">{{ formatTime(song.dt / 1000) }}</span>
+        </div>
+      </div>
+    </div>
   </a-drawer>
 </template>

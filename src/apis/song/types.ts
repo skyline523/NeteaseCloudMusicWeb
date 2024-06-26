@@ -58,7 +58,7 @@ export interface SongDetail {
   v: number
   // 专辑，如果是DJ节目(dj_type != 0)或者无专辑信息(single == 1)，则专辑id为0
   al: Album
-  // 歌曲时长
+  // 歌曲毫秒级时长，搭配utils/index中formatTime格式化为00:00需除以1000
   dt: number
   // Hi-Res质量文件信息
   hr: Quality

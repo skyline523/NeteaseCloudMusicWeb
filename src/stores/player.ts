@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { message } from 'ant-design-vue'
 import { getSongDetail } from '~/apis/song'
 import type { SongDetail } from '~/apis/song/types'
 
@@ -15,14 +16,13 @@ export const usePlayerStore = defineStore('player', () => {
       else return playState.value = true
     }
 
-    const { data: _ } = useRequest(getSongDetail, {
-      defaultParams: [[id]],
-      onSuccess(data) {
-        currentSong.value = data.songs[0]
-        playState.value = true
-        addToPlaylist(data.songs[0])
-      },
-    })
+    const data = await getSongDetail([id])
+    if (data) {
+      currentSong.value = data.songs[0]
+      playState.value = true
+      addToPlaylist(data.songs[0])
+      message.success('已添加至播放列表')
+    }
   }
 
   function addToPlaylist(song: SongDetail) {
