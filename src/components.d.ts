@@ -14,7 +14,6 @@ declare module 'vue' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     LeArtistText: typeof import('./components/LeArtistText/index.vue')['default']
     LeImage: typeof import('./components/LeImage/index.vue')['default']
-    LeMarqueeText: typeof import('./components/LeMarqueeText/index.vue')['default']
     LeSwiper: typeof import('./components/LeSwiper/index.vue')['default']
     LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LeVideoPlayer: typeof import('./components/LeVideoPlayer/index.vue')['default']

@@ -12,16 +12,17 @@ export const usePlayerStore = defineStore('player', () => {
     const song = playlist.value.find(item => item.id === id)
     if (song) {
       if (currentSong.value?.id === song.id)
-        return playState.value = false
+        return playState.value = !playState.value
       else return playState.value = true
     }
-
-    const data = await getSongDetail([id])
-    if (data) {
-      currentSong.value = data.songs[0]
-      playState.value = true
-      addToPlaylist(data.songs[0])
-      message.success('已添加至播放列表')
+    else {
+      playState.value = false
+      getSongDetail([id]).then((res) => {
+        currentSong.value = res.songs[0]
+        addToPlaylist(res.songs[0])
+        playState.value = true
+        message.success('已添加至播放列表')
+      })
     }
   }
 
