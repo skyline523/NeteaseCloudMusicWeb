@@ -4,8 +4,8 @@ import { getSongDetail } from '~/apis/song'
 import type { SongDetail } from '~/apis/song/types'
 
 export const usePlayerStore = defineStore('player', () => {
-  const currentSong = ref<SongDetail | null>(null)
-  const playlist = ref<SongDetail[]>([])
+  const playlist = useStorage<SongDetail[]>('playlist', [])
+  const currentSong = useStorage<SongDetail | null>('currentSong', playlist.value[0] || null)
   const playState = ref<boolean>(false) // true 播放中，false 暂停
 
   function playSong(id: number) {

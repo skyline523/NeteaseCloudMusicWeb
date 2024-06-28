@@ -46,8 +46,8 @@ const { data: listDetail } = useRequest(getPlaylistDetail, {
     <div mb-2 h-56px py-2>
       {{ listDetail?.playlist.name }}
     </div>
-    <div flex="~ items-end" mb-2>
-      <div flex="~ 1 col gap-y-2" mb-2xp font="tabular-nums">
+    <div flex="~ items-end" mb-2 w-full>
+      <div flex="~ 1 col gap-y-2" font="tabular-nums" w="70%">
         <div
           v-for="(track, index) in listDetail?.playlist.tracks.slice(0, 3)"
           :key="track.id"
