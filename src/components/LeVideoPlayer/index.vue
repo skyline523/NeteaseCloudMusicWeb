@@ -17,7 +17,17 @@ const currentTime = ref<number>(0) // 音频当前播放时长
 const isPlaying = ref(false) // 是否正在播放
 
 /**
- * 监听播放状态来判断播放还是暂停
+ * 监听切换歌曲后播放
+ */
+watch(currentSong, (newSong) => {
+  if (newSong) {
+    if (audioRef.value)
+      nextTick(() => audioRef.value?.play())
+  }
+})
+
+/**
+ * 监听播放状态来判断当前歌曲是否播放
  */
 watch(playState, () => {
   if (audioRef.value) {

@@ -8,19 +8,19 @@ export const usePlayerStore = defineStore('player', () => {
   const playlist = ref<SongDetail[]>([])
   const playState = ref<boolean>(false) // true 播放中，false 暂停
 
-  async function setSong(id: number) {
+  function setSong(id: number) {
     const song = playlist.value.find(item => item.id === id)
     if (song) {
       if (currentSong.value?.id === song.id)
-        return playState.value = !playState.value
-      else return playState.value = true
+        playState.value = !playState.value
+      else
+        currentSong.value = song
     }
     else {
-      playState.value = false
+      // playState.value = false
       getSongDetail([id]).then((res) => {
         currentSong.value = res.songs[0]
         addToPlaylist(res.songs[0])
-        playState.value = true
         message.success('已添加至播放列表')
       })
     }
@@ -28,7 +28,7 @@ export const usePlayerStore = defineStore('player', () => {
 
   function addToPlaylist(song: SongDetail) {
     if (!playlist.value.some(s => s.id === song.id))
-      playlist.value.push(song)
+      playlist.value.unshift(song)
   }
 
   return {
