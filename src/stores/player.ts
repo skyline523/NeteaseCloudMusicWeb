@@ -8,7 +8,7 @@ export const usePlayerStore = defineStore('player', () => {
   const playlist = ref<SongDetail[]>([])
   const playState = ref<boolean>(false) // true 播放中，false 暂停
 
-  function setSong(id: number) {
+  function playSong(id: number) {
     const song = playlist.value.find(item => item.id === id)
     if (song) {
       if (currentSong.value?.id === song.id)
@@ -32,7 +32,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   return {
-    setSong,
+    playSong,
     addToPlaylist,
     currentSong,
     playlist,

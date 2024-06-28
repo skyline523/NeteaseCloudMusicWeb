@@ -2,19 +2,30 @@
 import { storeToRefs } from 'pinia'
 import { songUrl } from '~/apis/song'
 import { formatTime } from '~/utils'
+import { useAudio } from '~/hooks/useAudio'
 import record from '~/assets/images/record.png'
 
 defineOptions({
   name: 'LeVideoPlayer',
 })
 
+const audioRef = ref<HTMLAudioElement | null>(null)
+
+const {
+  duration,
+  currentTime,
+  isPlaying,
+  progressPercentage,
+  bufferProgressPercentage,
+  volume,
+  oldVolume,
+  handlePlayAndPause,
+  handleChangeBarWidth,
+  handleChangeVolume,
+} = useAudio(audioRef)
+
 const playerStore = usePlayerStore()
 const { currentSong, playState } = storeToRefs(playerStore)
-
-const audioRef = ref<HTMLAudioElement>()
-const duration = ref<number>(0) // 音频总时长
-const currentTime = ref<number>(0) // 音频当前播放时长
-const isPlaying = ref(false) // 是否正在播放
 
 /**
  * 监听切换歌曲后播放
@@ -37,119 +48,10 @@ watch(playState, () => {
   }
 })
 
-/**
- * 音频的播放和暂停
- */
-function handlePlayAnPause() {
-  if (audioRef.value) {
-    if (isPlaying.value)
-      audioRef.value.pause()
-    else audioRef.value.play()
-  }
-}
-
-/**
- * 更新音频当前播放时长
- */
-function updateCurrentTime() {
-  if (audioRef.value)
-    currentTime.value = audioRef.value.currentTime
-}
-
-/**
- * 更新音频总时长
- */
-function updateDuration() {
-  if (audioRef.value)
-    duration.value = audioRef.value.duration
-}
-
 // 格式化后的音频总时长
 const formattedCurrentTime = computed(() => formatTime(currentTime.value))
 // 格式化后的音频当前播放时长
 const formattedDuration = computed(() => formatTime(duration.value))
-
-/**
- * 进度条内容
- */
-// 进度条进度
-const progressPercentage = computed(() => {
-  if (currentTime.value === 0 && duration.value === 0)
-    return 0
-  return (currentTime.value / duration.value) * 100
-})
-const bufferProgressPercentage = ref<number>(0) // 缓冲进度条
-
-/**
- * 进度条组件 change 事件
- * 改变进度条进度时触发，包括点击和拖拽
- *
- * @param val 进度条百分比小数
- */
-function handleChangeBarWidth(val: number) {
-  if (audioRef.value)
-    audioRef.value.currentTime = duration.value * (val / 100)
-}
-
-function onProgress() {
-  const audio = audioRef.value
-  try {
-    if (audio) {
-      if (audio.buffered.length > 0) {
-        const duration = audio.duration
-        let buffered = 0
-        buffered = audio.buffered.end(0) > duration ? duration : audio.buffered.end(0)
-        bufferProgressPercentage.value = (buffered / duration) * 100
-      }
-    }
-  }
-  catch (e) {}
-}
-
-/**
- * 音量组件
- */
-const volume = ref(100)
-const oldVolume = ref(100)
-
-function handleChangeVolume(newVol: number, oldVol: number) {
-  if (audioRef.value) {
-    volume.value = newVol
-    oldVolume.value = oldVol
-
-    audioRef.value.volume = newVol / 100
-  }
-}
-
-// 添加事件监听器
-onMounted(() => {
-  if (audioRef.value) {
-    volume.value = audioRef.value.volume * 100
-
-    audioRef.value.addEventListener('timeupdate', updateCurrentTime)
-    audioRef.value.addEventListener('loadedmetadata', updateDuration)
-    audioRef.value.addEventListener('play', () => {
-      isPlaying.value = true
-    })
-    audioRef.value.addEventListener('pause', () => {
-      isPlaying.value = false
-    })
-  }
-})
-
-// 清理事件监听器
-onUnmounted(() => {
-  if (audioRef.value) {
-    audioRef.value.removeEventListener('timeupdate', updateCurrentTime)
-    audioRef.value.removeEventListener('loadedmetadata', updateDuration)
-    audioRef.value.removeEventListener('play', () => {
-      isPlaying.value = true
-    })
-    audioRef.value.removeEventListener('pause', () => {
-      isPlaying.value = false
-    })
-  }
-})
 </script>
 
 <template>
@@ -194,7 +96,7 @@ onUnmounted(() => {
       <div flex="~ items-center gap-x-6">
         <div i-solar-heart-linear text="gray-500/80" />
         <div i-solar-skip-previous-bold text="gray-500" />
-        <div bg="netease-red" cursor-pointer rounded-full p-11px @click="handlePlayAnPause">
+        <div bg="netease-red" cursor-pointer rounded-full p-11px @click="handlePlayAndPause">
           <div v-show="!isPlaying" i-solar-play-bold text="white" />
           <div v-show="isPlaying" i-solar-pause-bold text="white" />
         </div>
@@ -215,20 +117,11 @@ onUnmounted(() => {
 
     <!-- 播放器右侧操作 -->
     <div max-w-320px px-7 flex="~ gap-x-4 justify-end" text="gray-500/80" w="full">
-      <Volumn :volume="volume" :old-volume="oldVolume" @change="handleChangeVolume" />
+      <Volume :volume="volume" :old-volume="oldVolume" @change="handleChangeVolume" />
       <PlayList />
     </div>
 
-    <audio
-      ref="audioRef"
-      :src="songUrl(currentSong?.id!)"
-      @timeupdate="updateCurrentTime"
-      @loadedmetadata="updateDuration"
-      @progress="onProgress"
-    />
-
-    <!-- 播放列表 -->
-    <!-- <PlayList v-model="playListVisible" /> -->
+    <audio ref="audioRef" :src="songUrl(currentSong?.id!)" />
   </div>
 </template>
 
