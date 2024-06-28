@@ -21,13 +21,13 @@ const muted = ref<boolean>(false)
 const progressRef = ref<HTMLElement | null>()
 
 function handleClickBar(event: MouseEvent) {
-  updateProgressBarWidth(event)
+  updateProgressBarHeight(event)
 }
 
-function updateProgressBarWidth(e: MouseEvent) {
-  const mouseY = e.clientY // 鼠标点击位置横坐标(以根元素左侧)
-  const progressBarLeft = getElementLeft(progressRef.value!) // 元素距离根元素左侧的距离
-  const clickPosition = mouseY - progressBarLeft // 鼠标点击位置距离元素左侧距离
+function updateProgressBarHeight(e: MouseEvent) {
+  const mouseY = e.clientY // 鼠标点击位置纵坐标(以根元素左侧)
+  const progressBarTop = getElementTop(progressRef.value!) // 元素距离根元素顶部的距离
+  const clickPosition = mouseY - progressBarTop // 鼠标点击位置距离元素距离
   const progressBarWidth = progressRef.value?.offsetHeight || 0
 
   const newPercentage = clickPosition >= progressBarWidth ? 0 : ((progressBarWidth - clickPosition) / progressBarWidth) * 100
@@ -40,13 +40,13 @@ function updateProgressBarWidth(e: MouseEvent) {
  */
 function handleDragBar() {
   document.onmousemove = (e) => {
-    updateProgressBarWidth(e)
+    updateProgressBarHeight(e)
   }
 
   document.body.onselectstart = () => false
 
   document.onmouseup = (e) => {
-    updateProgressBarWidth(e)
+    updateProgressBarHeight(e)
 
     document.onmousemove = document.onmouseup = document.body.onselectstart = null
   }
@@ -55,9 +55,9 @@ function handleDragBar() {
 /**
  * 获取元素距离根元素的左侧距离
  * @param el HTML 元素
- * @returns 距离左侧的距离
+ * @returns 距离顶部的距离
  */
-function getElementLeft(el: HTMLElement) {
+function getElementTop(el: HTMLElement) {
   let top = 0
   let currentElement: HTMLElement | null = el
 
