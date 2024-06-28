@@ -75,6 +75,13 @@ function handleMutedVolume() {
   else emits('change', 0, props.volume)
 }
 
+function handleWheelVolume(e: WheelEvent) {
+  if (e.deltaY > 0)
+    emits('change', Math.min(100, Math.max(0, (props.volume - 3))), props.oldVolume)
+  else
+    emits('change', Math.min(100, Math.max(0, (props.volume + 3))), props.oldVolume)
+}
+
 watch(() => props.volume, (newVol) => {
   if (newVol === 0)
     muted.value = true
@@ -88,9 +95,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <a-tooltip placement="top" color="#ffffff">
+  <a-tooltip placement="top" color="#ffffff" :overlay-inner-style="{ padding: '4px !important' }">
     <template #title>
-      <div h-30 w-5 pt-2 flex="~ col items-center justify-between">
+      <div h-30 w-30px pt-3 flex="~ col items-center justify-between" @wheel.capture="handleWheelVolume">
         <div
           ref="progressRef"
           position="relative"
@@ -115,7 +122,7 @@ onUnmounted(() => {
             />
           </div>
         </div>
-        <div transform="scale-85" mt-2>
+        <div transform="scale-85" mt-1>
           <span text="xs txt-gray">{{ volume.toFixed(0) }}%</span>
         </div>
       </div>
@@ -131,6 +138,7 @@ onUnmounted(() => {
           : 'i-solar-volume-loud-linear',
       ]"
       @click.prevent="handleMutedVolume"
+      @wheel.stop="handleWheelVolume"
     />
   </a-tooltip>
 </template>
