@@ -66,7 +66,7 @@ const playListVisible = ref(false)
         transition="background-color duration-200"
         hover="bg-lighter-gray"
       >
-        <LeImage :src="song.al.picUrl" class="h-12 w-12 rounded-lg" />
+        <LeImage :src="song.al.picUrl" class="h-12 w-12 rounded-lg" @click="playerStore.playSong(song.id)" />
         <div flex="~ col items-start gap-y-2px 1">
           <span text="sm">{{ song.name }}</span>
           <div>
