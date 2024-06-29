@@ -25,7 +25,16 @@ const {
 } = useAudio(audioRef)
 
 const playerStore = usePlayerStore()
-const { currentSong, playState } = storeToRefs(playerStore)
+const { currentSong, playlist, playState, playIndex, mode } = storeToRefs(playerStore)
+const { setPlayIndex } = playerStore
+
+function onPlay() {
+  nextTick(() => audioRef.value?.play())
+}
+
+function onPause() {
+  nextTick(() => audioRef.value?.pause())
+}
 
 /**
  * 监听切换歌曲后播放
@@ -33,7 +42,7 @@ const { currentSong, playState } = storeToRefs(playerStore)
 watch(currentSong, (newSong) => {
   if (newSong) {
     if (audioRef.value)
-      nextTick(() => audioRef.value?.play())
+      onPlay()
   }
 })
 
@@ -43,8 +52,8 @@ watch(currentSong, (newSong) => {
 watch(playState, () => {
   if (audioRef.value) {
     if (playState.value)
-      nextTick(() => audioRef.value?.play())
-    else nextTick(() => audioRef.value?.pause())
+      onPlay()
+    else onPause()
   }
 })
 
@@ -52,6 +61,24 @@ watch(playState, () => {
 const formattedCurrentTime = computed(() => formatTime(currentTime.value))
 // 格式化后的音频当前播放时长
 const formattedDuration = computed(() => formatTime(duration.value))
+
+function handleNextSong() {
+  if (mode.value === 'random')
+    setPlayIndex(Math.floor(Math.random() * playlist.value.length))
+  else
+    setPlayIndex((playIndex.value + 1) % playlist.value.length)
+
+  onPlay()
+}
+
+function handlePrevSong() {
+  if (mode.value === 'random')
+    setPlayIndex(Math.floor(Math.random() * playlist.value.length))
+  else
+    setPlayIndex((playIndex.value - 1 + playlist.value.length) % playlist.value.length)
+
+  onPlay()
+}
 </script>
 
 <template>
@@ -95,12 +122,24 @@ const formattedDuration = computed(() => formatTime(duration.value))
     <div flex="~ col items-center" h-full py-3>
       <div flex="~ items-center gap-x-6">
         <div i-solar-heart-linear text="gray-500/80" />
-        <div i-solar-skip-previous-bold text="gray-500" />
-        <div bg="netease-red" cursor-pointer rounded-full p-11px @click="handlePlayAndPause">
+        <div
+          i-solar-skip-previous-bold cursor-pointer duration-200
+          text="gray-500 hover:gray-600"
+          @click="handlePrevSong"
+        />
+        <div
+          bg="netease-red"
+          cursor-pointer rounded-full p-11px
+          @click="handlePlayAndPause"
+        >
           <div v-show="!isPlaying" i-solar-play-bold text="white" />
           <div v-show="isPlaying" i-solar-pause-bold text="white" />
         </div>
-        <div i-solar-skip-next-bold text="gray-500" />
+        <div
+          i-solar-skip-next-bold cursor-pointer duration-200
+          text="gray-500 hover:gray-600"
+          @click="handleNextSong"
+        />
         <!-- 心动模式 -->
         <div i-solar-heart-pulse-linear text="gray-500/80" />
       </div>
