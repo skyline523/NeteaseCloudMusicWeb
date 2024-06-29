@@ -4,12 +4,20 @@ import { songUrl } from '~/apis/song'
 import { formatTime } from '~/utils'
 import { useAudio } from '~/hooks/useAudio'
 import record from '~/assets/images/record.png'
+import type { Mode } from '~/stores/player'
 
 defineOptions({
   name: 'LeVideoPlayer',
 })
 
 const audioRef = ref<HTMLAudioElement | null>(null)
+
+const modes = [
+  { name: 'sequence', iconClass: 'i-solar-hamburger-menu-linear' },
+  { name: 'loop', iconClass: 'i-solar-repeat-linear' },
+  { name: 'singleLoop', iconClass: 'i-solar-repeat-one-linear' },
+  { name: 'random', iconClass: 'i-solar-link-circle-linear' },
+] as { name: Mode, iconClass: string }[]
 
 const {
   duration,
@@ -26,7 +34,7 @@ const {
 
 const playerStore = usePlayerStore()
 const { currentSong, playlist, playState, playIndex, mode } = storeToRefs(playerStore)
-const { setPlayIndex } = playerStore
+const { setMode, setPlayIndex } = playerStore
 
 function onPlay() {
   nextTick(() => audioRef.value?.play())
@@ -141,7 +149,15 @@ function handlePrevSong() {
           @click="handleNextSong"
         />
         <!-- 心动模式 -->
-        <div i-solar-heart-pulse-linear text="gray-500/80" />
+        <!-- <div i-solar-heart-pulse-linear text="gray-500/80" /> -->
+        <div
+          v-for="(item, index) in modes"
+          v-show="mode === item.name"
+          :key="item.name"
+          :class="item.iconClass"
+          class="cursor-pointer text-lg text-gray-500/80 duration-200 hover:text-gray-600"
+          @click="setMode(modes[(index + 1) % modes.length].name)"
+        />
       </div>
       <div flex="~ justify-center items-center gap-x-2" mt-1>
         <span text="xs gray-400/70" transform="scale-75">{{ formattedCurrentTime }}</span>

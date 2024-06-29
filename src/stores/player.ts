@@ -3,13 +3,13 @@ import { message } from 'ant-design-vue'
 import { getSongDetail } from '~/apis/song'
 import type { SongDetail } from '~/apis/song/types'
 
-type Mode = 'sequence' | 'loop' | 'random'
+export type Mode = 'sequence' | 'loop' | 'signleLoop' | 'random'
 
 export const usePlayerStore = defineStore('player', () => {
   const playlist = useStorage<SongDetail[]>('playlist', [])
   const playIndex = useStorage<number>('playIndex', 0)
   const playState = ref<boolean>(false) // true 播放中，false 暂停
-  const mode = useStorage<Mode>('mode', 'loop')
+  const mode = useStorage<Mode>('mode', 'sequence')
 
   const currentSong = computed(() => playlist.value[playIndex.value] || null)
 
