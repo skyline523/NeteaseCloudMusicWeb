@@ -3,7 +3,7 @@ import { message } from 'ant-design-vue'
 import { getSongDetail } from '~/apis/song'
 import type { SongDetail } from '~/apis/song/types'
 
-export type Mode = 'sequence' | 'loop' | 'signleLoop' | 'random'
+export type Mode = 'sequence' | 'loop' | 'singleLoop' | 'random'
 
 export const usePlayerStore = defineStore('player', () => {
   const playlist = useStorage<SongDetail[]>('playlist', [])

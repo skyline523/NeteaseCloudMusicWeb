@@ -107,8 +107,15 @@ export function useAudio(audioRef: Ref<HTMLAudioElement | null>) {
         const nextIndex = playlist.value.indexOf(nextSong)
         playerStore.playSong(nextIndex === -1 ? playlist.value[0].id : nextSong.id)
       }
-      else if (mode.value === 'signleLoop') {
-        // 单曲循环
+      else if (mode.value === 'singleLoop') {
+        if (audioRef.value) {
+          audioRef.value.currentTime = 0
+          audioRef.value.play()
+        }
+      }
+      else if (mode.value === 'random') {
+        const randomIndex = Math.floor(Math.random() * playlist.value.length)
+        playerStore.playSong(playlist.value[randomIndex].id)
       }
     }
   }
@@ -133,6 +140,7 @@ export function useAudio(audioRef: Ref<HTMLAudioElement | null>) {
       audioRef.value.removeEventListener('timeupdate', updateCurrentTime)
       audioRef.value.removeEventListener('loadedmetadata', updateDuration)
       audioRef.value.removeEventListener('progress', updateBufferProgress)
+      audioRef.value.removeEventListener('ended', onEnded)
       audioRef.value.removeEventListener('play', () => {
         isPlaying.value = true
       })
