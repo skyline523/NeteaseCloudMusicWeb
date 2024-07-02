@@ -3,24 +3,34 @@ import { message } from 'ant-design-vue'
 import { getSongDetail } from '~/apis/song'
 import type { SongDetail } from '~/apis/song/types'
 
+export type Mode = 'sequence' | 'loop' | 'signleLoop' | 'random'
+
 export const usePlayerStore = defineStore('player', () => {
   const playlist = useStorage<SongDetail[]>('playlist', [])
-  const currentSong = useStorage<SongDetail | null>('currentSong', playlist.value[0] || null)
+
+  const playIndex = useStorage<number>('playIndex', 0)
   const playState = ref<boolean>(false) // true 播放中，false 暂停
+  const mode = useStorage<Mode>('mode', 'sequence')
+
+  const currentSong = computed(() => playlist.value[playIndex.value] || null)
 
   function playSong(id: number) {
-    const song = playlist.value.find(item => item.id === id)
-    if (song) {
-      if (currentSong.value?.id === song.id)
+    const songIndex = playlist.value.findIndex(song => song.id === id)
+
+    if (songIndex !== -1) {
+      if (currentSong.value.id === id) {
         playState.value = !playState.value
-      else
-        currentSong.value = song
+      }
+      else {
+        playIndex.value = songIndex
+        playState.value = true
+      }
     }
     else {
-      // playState.value = false
       getSongDetail([id]).then((res) => {
-        currentSong.value = res.songs[0]
         addToPlaylist(res.songs[0])
+        playIndex.value = 0
+        playState.value = true
         message.success('已添加至播放列表')
       })
     }
@@ -31,12 +41,24 @@ export const usePlayerStore = defineStore('player', () => {
       playlist.value.unshift(song)
   }
 
+  function setMode(val: Mode) {
+    mode.value = val
+  }
+
+  function setPlayIndex(val: number) {
+    playIndex.value = val
+  }
+
   return {
+    playlist,
+    playIndex,
+    playState,
+    mode,
+    currentSong,
     playSong,
     addToPlaylist,
-    currentSong,
-    playlist,
-    playState,
+    setMode,
+    setPlayIndex,
   }
 })
 

@@ -1,3 +1,5 @@
+import { storeToRefs } from 'pinia'
+
 /**
  * 用于控制音频的播放、暂停、进度条、音量等
  *
@@ -16,6 +18,9 @@ export function useAudio(audioRef: Ref<HTMLAudioElement | null>) {
       return 0
     return (currentTime.value / duration.value) * 100
   })
+
+  const playerStore = usePlayerStore()
+  const { playlist, playIndex, mode } = storeToRefs(playerStore)
 
   /**
    * 更新当前播放时间
@@ -87,11 +92,33 @@ export function useAudio(audioRef: Ref<HTMLAudioElement | null>) {
     }
   }
 
+  /**
+   * 监听播放结束
+   */
+  function onEnded(event: Event) {
+    if (event.type === 'ended') {
+      if (mode.value === 'sequence') {
+        if (playIndex.value + 1 === playlist.value.length)
+          return null
+        else playerStore.playSong(playlist.value[playIndex.value + 1].id)
+      }
+      else if (mode.value === 'loop') {
+        const nextSong = playlist.value[playIndex.value + 1]
+        const nextIndex = playlist.value.indexOf(nextSong)
+        playerStore.playSong(nextIndex === -1 ? playlist.value[0].id : nextSong.id)
+      }
+      else if (mode.value === 'signleLoop') {
+        // 单曲循环
+      }
+    }
+  }
+
   onMounted(() => {
     if (audioRef.value) {
       audioRef.value.addEventListener('timeupdate', updateCurrentTime)
       audioRef.value.addEventListener('loadedmetadata', updateDuration)
       audioRef.value.addEventListener('progress', updateBufferProgress)
+      audioRef.value.addEventListener('ended', onEnded)
       audioRef.value.addEventListener('play', () => {
         isPlaying.value = true
       })
