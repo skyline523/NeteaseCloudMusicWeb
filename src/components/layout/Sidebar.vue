@@ -9,15 +9,26 @@ interface Menu {
 }
 
 const menus = ref<Menu[]>([
-  {
-    name: '为我推荐',
-    path: '/',
-    icon: 'i-solar-home-angle-2-bold',
-  },
+  // {
+  //   name: '为我推荐',
+  //   path: '/',
+  //   icon: 'i-solar-home-angle-2-bold',
+  // },
   {
     name: '云音乐精选',
     path: '/handpicked',
     icon: 'i-solar-music-library-2-bold-duotone',
+    divide: true,
+  },
+  {
+    name: '我喜欢的音乐',
+    path: '/likes',
+    icon: 'i-solar-heart-bold',
+  },
+  {
+    name: '最近播放',
+    path: '/history',
+    icon: 'i-solar-clock-circle-bold',
   },
 ])
 </script>
@@ -30,18 +41,24 @@ const menus = ref<Menu[]>([
       </RouterLink>
     </div>
     <div flex="~ col gap-y-1" p-6>
-      <RouterLink
+      <template
         v-for="menu in menus"
         :key="menu.path"
-        :to="menu.path"
-        flex="~ flex items-center gap-x-2"
-        hover="bg-#e4e8ec"
-        transition="duration-300"
-        rounded-lg px-3 py-2 text-gray-500
       >
-        <div :class="menu.icon" />
-        <span text="sm">{{ menu.name }}</span>
-      </RouterLink>
+        <RouterLink
+          :to="menu.path"
+          flex="~ flex items-center gap-x-2"
+          hover="bg-#e4e8ec"
+          transition="duration-300"
+          rounded-lg px-3 py-2 text-gray-500
+        >
+          <div :class="menu.icon" />
+          <span text="sm">{{ menu.name }}</span>
+        </RouterLink>
+        <div v-if="menu.divide" px-2>
+          <ADivider class="my-10px" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
