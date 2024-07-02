@@ -25,8 +25,12 @@ const { data: _ } = useRequest(generateQRCodeKey, {
       <p text="xl" font="bold">
         扫码登录
       </p>
-      <div h-160px w-160px>
-        <a-qrcode v-if="qrCode?.data.qrurl" :value="qrCode?.data.qrurl" />
+      <div>
+        <a-qrcode
+          v-if="qrCode?.data.qrurl"
+          :value="qrCode?.data.qrurl"
+          :size="190"
+        />
       </div>
       <p cursor-default>
         <span text="red-300" mr-1>网易云音乐APP</span>扫码登录
