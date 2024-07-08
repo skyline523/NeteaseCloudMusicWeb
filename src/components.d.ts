@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ADivider: typeof import('ant-design-vue/es')['Divider']
     ADrawer: typeof import('ant-design-vue/es')['Drawer']
     AModal: typeof import('ant-design-vue/es')['Modal']
     AQrcode: typeof import('ant-design-vue/es')['QRCode']
@@ -14,6 +15,7 @@ declare module 'vue' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     LeArtistText: typeof import('./components/LeArtistText/index.vue')['default']
     LeImage: typeof import('./components/LeImage/index.vue')['default']
+    LeMarqueeText: typeof import('./components/LeMarqueeText/index.vue')['default']
     LeSwiper: typeof import('./components/LeSwiper/index.vue')['default']
     LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LeVideoPlayer: typeof import('./components/LeVideoPlayer/index.vue')['default']
@@ -28,6 +30,5 @@ declare module 'vue' {
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     TheInput: typeof import('./components/TheInput.vue')['default']
     Volume: typeof import('./components/LeVideoPlayer/Volume.vue')['default']
-    Volumn: typeof import('./components/LeVideoPlayer/Volumn.vue')['default']
   }
 }

@@ -7,6 +7,8 @@ export type Mode = 'sequence' | 'loop' | 'singleLoop' | 'random'
 
 export const usePlayerStore = defineStore('player', () => {
   const playlist = useStorage<SongDetail[]>('playlist', [])
+  const likelist = useStorage<SongDetail[]>('likelist', [])
+  const historylist = useStorage<SongDetail[]>('historylist', [])
 
   const playIndex = useStorage<number>('playIndex', 0)
   const playState = ref<boolean>(false) // true 播放中，false 暂停
@@ -24,11 +26,13 @@ export const usePlayerStore = defineStore('player', () => {
       else {
         playIndex.value = songIndex
         playState.value = true
+        addToHistorylist(currentSong.value)
       }
     }
     else {
       getSongDetail([id]).then((res) => {
         addToPlaylist(res.songs[0])
+        addToHistorylist(res.songs[0])
         playIndex.value = 0
         playState.value = true
         message.success('已添加至播放列表')
@@ -41,6 +45,23 @@ export const usePlayerStore = defineStore('player', () => {
       playlist.value.unshift(song)
   }
 
+  function addToLikelist(song: SongDetail) {
+    likelist.value.unshift(song)
+  }
+
+  function removeToLikelist(song: SongDetail) {
+    likelist.value = likelist.value.filter(item => item.id !== song.id)
+  }
+
+  function addToHistorylist(song: SongDetail) {
+    if (!historylist.value.some(s => s.id === song.id))
+      historylist.value.unshift(song)
+  }
+
+  function removeToHistorylist(song: SongDetail) {
+    historylist.value = historylist.value.filter(item => item.id !== song.id)
+  }
+
   function setMode(val: Mode) {
     mode.value = val
   }
@@ -51,12 +72,18 @@ export const usePlayerStore = defineStore('player', () => {
 
   return {
     playlist,
+    likelist,
+    historylist,
     playIndex,
     playState,
     mode,
     currentSong,
     playSong,
     addToPlaylist,
+    addToLikelist,
+    removeToLikelist,
+    addToHistorylist,
+    removeToHistorylist,
     setMode,
     setPlayIndex,
   }

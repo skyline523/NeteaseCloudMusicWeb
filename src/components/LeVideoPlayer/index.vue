@@ -33,8 +33,10 @@ const {
 } = useAudio(audioRef)
 
 const playerStore = usePlayerStore()
-const { currentSong, playlist, playState, playIndex, mode } = storeToRefs(playerStore)
-const { setMode, setPlayIndex } = playerStore
+const { currentSong, playlist, likelist, playState, playIndex, mode } = storeToRefs(playerStore)
+const { setMode, setPlayIndex, addToLikelist, removeToLikelist } = playerStore
+
+const isLike = computed(() => likelist.value.includes(currentSong.value))
 
 function onPlay() {
   nextTick(() => audioRef.value?.play())
@@ -87,6 +89,12 @@ function handlePrevSong() {
 
   onPlay()
 }
+
+function handleLike() {
+  if (isLike.value)
+    removeToLikelist(currentSong.value)
+  else addToLikelist(currentSong.value)
+}
 </script>
 
 <template>
@@ -109,7 +117,6 @@ function handlePrevSong() {
           class="absolute left-0 top-0 h-full w-full"
         />
         <LeImage
-
           :src="currentSong.al.picUrl"
           class="absolute left-50% top-50% h-68% w-68% translate-x--50% translate-y--50% rounded-full"
         />
@@ -120,6 +127,7 @@ function handlePrevSong() {
           <LeArtistText :artists="currentSong.ar" class="text-xs" />
         </div>
         <div flex="~ items-center gap-x-4" text="gray-500/80" px-1>
+          <div i-solar-add-folder-linear />
           <div i-solar-chat-round-call-broken />
           <div i-solar-archive-down-minimlistic-linear />
         </div>
@@ -129,7 +137,18 @@ function handlePrevSong() {
     <!-- 播放器中控 -->
     <div flex="~ col items-center" h-full py-3>
       <div flex="~ items-center gap-x-6">
-        <div i-solar-heart-linear text="gray-500/80" />
+        <div
+          v-show="!isLike"
+          i-solar-heart-linear cursor-pointer duration-200
+          text="gray-500/80 lg hover:gray-600"
+          @click="handleLike"
+        />
+        <div
+          v-show="isLike"
+          i-solar-heart-bold cursor-pointer duration-200
+          text="netease-red lg hover:netease-red/80"
+          @click="handleLike"
+        />
         <div
           i-solar-skip-previous-bold cursor-pointer duration-200
           text="gray-500 hover:gray-600"
