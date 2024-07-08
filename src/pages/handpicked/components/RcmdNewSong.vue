@@ -46,7 +46,7 @@ const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
             />
             <div ml-3 h-full flex="~ col items-start justify-center gap-y-1">
               <div>{{ item.name }}</div>
-              <div text="xs txt-gray">
+              <div text="xs txt-gray" line-clamp-1>
                 <LeArtistText :artists="item.song.artists" />
               </div>
             </div>
