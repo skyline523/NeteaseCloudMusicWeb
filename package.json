@@ -24,14 +24,15 @@
     "ant-design-vue": "^4.1.2",
     "axios": "^1.6.8",
     "nprogress": "^0.2.0",
+    "overlayscrollbars": "^2.9.2",
+    "overlayscrollbars-vue": "^0.5.9",
     "pinia": "^2.1.7",
     "swiper": "^11.1.1",
     "vue": "^3.4.23",
     "vue-demi": "^0.14.7",
     "vue-hooks-plus": "^1.8.9",
     "vue-i18n": "^9.13.0",
-    "vue-router": "^4.3.2",
-    "vue3-perfect-scrollbar": "^2.0.0"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.15.0",

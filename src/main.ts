@@ -8,6 +8,7 @@ import type { UserModule } from './types'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
+import 'overlayscrollbars/styles/overlayscrollbars.css'
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(

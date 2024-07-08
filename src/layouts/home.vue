@@ -1,9 +1,34 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+import {
+  OverlayScrollbarsComponent,
+  useOverlayScrollbars,
+} from 'overlayscrollbars-vue'
+import type { OverlayScrollbarsComponentRef } from 'overlayscrollbars-vue'
+import { useOsObserver } from '~/hooks/useOsObserver'
 
 const playerStore = usePlayerStore()
 const { playlist } = storeToRefs(playerStore)
+
+const elementHidden = ref(false)
+const overlayScrollbarsApplied = ref(true)
+const bodyOverlayScrollbarsApplied = ref<boolean | null>(null)
+const osRef = ref<OverlayScrollbarsComponentRef | null>(null)
+const [_, activateEvent] = useOsObserver()
+const [initBodyOverlayScrollbars]
+  = useOverlayScrollbars({
+    defer: true,
+    events: {
+      initialized: () => {
+        bodyOverlayScrollbarsApplied.value = true
+      },
+      destroyed: () => {
+        bodyOverlayScrollbarsApplied.value = false
+      },
+    },
+  })
+
+onMounted(() => initBodyOverlayScrollbars(document.body))
 
 const hasPlaylist = computed(() => playlist.value && playlist.value.length > 0)
 </script>
@@ -26,17 +51,35 @@ const hasPlaylist = computed(() => playlist.value && playlist.value.length > 0)
       :p="hasPlaylist ? 'b-20' : 'b-0'"
     >
       <Navbar />
-      <PerfectScrollbar :wheel-speed="2">
+      <OverlayScrollbarsComponent
+        v-if="overlayScrollbarsApplied"
+        ref="osRef"
+        class="overlayscrollbars-vue"
+        :style="{ display: elementHidden ? 'none' : undefined }"
+        :options="{
+          scrollbars: {
+            theme: 'os-theme-light',
+            autoHide: 'leave',
+            autoHideDelay: 200,
+            autoHideSuspend: true,
+            clickScroll: true,
+          },
+        }"
+        :events="{
+          initialized: () => activateEvent('initialized'),
+          destroyed: () => activateEvent('destroyed'),
+          updated: () => activateEvent('updated'),
+          scroll: () => activateEvent('scroll'),
+        }"
+        defer
+      >
         <RouterView v-slot="{ Component }">
           <KeepAlive>
             <component :is="Component" />
           </KeepAlive>
         </RouterView>
-      </PerfectScrollbar>
-
-      <div h-40 w-full />
+      </OverlayScrollbarsComponent>
     </div>
-    <!-- :style="{ transform: `translateY(${hasPlayList ? 0 : '100%'})` }" -->
 
     <div
       position="absolute bottom-0 left-0"
@@ -50,32 +93,5 @@ const hasPlaylist = computed(() => playlist.value && playlist.value.length > 0)
 </template>
 
 <style>
-@import 'vue3-perfect-scrollbar/style.css';
 
-.ps {
-  height: calc(100% - 81px);
-}
-
-.ps__rail-y > .ps__thumb-y {
-  background-color: #e2e5e9;
-}
-.ps__rail-y:hover > .ps__thumb-y {
-  background-color: #c3c8cf;
-  width: 6px;
-  cursor: pointer;
-}
-.ps__rail-y.ps--clicking {
-  background-color: transparent !important;
-}
-.ps__rail-y.ps--clicking .ps__thumb-y {
-  background-color: #c3c8cf;
-  width: 6px;
-}
-.ps__rail-y:hover {
-  background-color: transparent !important;
-}
-
-.ps > div:first-child {
-  --at-apply: px-4;
-}
 </style>

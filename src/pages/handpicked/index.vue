@@ -6,7 +6,7 @@ import RcmdNewSong from './components/RcmdNewSong.vue'
 </script>
 
 <template>
-  <div pb-4 space-y-6>
+  <div px-4 pb-8 space-y-6>
     <Banner />
 
     <RcmdPlaylist />
