@@ -80,4 +80,6 @@ export interface SongDetail {
   // 非零表示有MV
   mv: number
   publishTime: number
+  // 非接口字段，最近播放时间
+  playTime: number
 }

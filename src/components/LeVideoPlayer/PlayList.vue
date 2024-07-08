@@ -18,7 +18,7 @@ const playListVisible = ref(false)
       <span text-gray-500>播放列表</span>
     </template>
     <div
-      i-solar-playlist-linear
+      i-solar-playlist-bold
       cursor-pointer duration-200
       text="xl"
       hover="text-gray-600"

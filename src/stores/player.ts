@@ -26,13 +26,11 @@ export const usePlayerStore = defineStore('player', () => {
       else {
         playIndex.value = songIndex
         playState.value = true
-        addToHistorylist(currentSong.value)
       }
     }
     else {
       getSongDetail([id]).then((res) => {
         addToPlaylist(res.songs[0])
-        addToHistorylist(res.songs[0])
         playIndex.value = 0
         playState.value = true
         message.success('已添加至播放列表')
@@ -54,8 +52,13 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   function addToHistorylist(song: SongDetail) {
-    if (!historylist.value.some(s => s.id === song.id))
-      historylist.value.unshift(song)
+    if (!historylist.value.some(s => s.id === song.id)) {
+      const now = Date.now()
+      historylist.value.unshift({
+        ...song,
+        playTime: now,
+      })
+    }
   }
 
   function removeToHistorylist(song: SongDetail) {

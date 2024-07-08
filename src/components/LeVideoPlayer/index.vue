@@ -33,8 +33,22 @@ const {
 } = useAudio(audioRef)
 
 const playerStore = usePlayerStore()
-const { currentSong, playlist, likelist, playState, playIndex, mode } = storeToRefs(playerStore)
-const { setMode, setPlayIndex, addToLikelist, removeToLikelist } = playerStore
+const {
+  currentSong,
+  playlist,
+  likelist,
+  historylist,
+  playState,
+  playIndex,
+  mode,
+} = storeToRefs(playerStore)
+const {
+  setMode,
+  setPlayIndex,
+  addToLikelist,
+  removeToLikelist,
+  addToHistorylist,
+} = playerStore
 
 const isLike = computed(() => likelist.value.includes(currentSong.value))
 
@@ -51,8 +65,10 @@ function onPause() {
  */
 watch(currentSong, (newSong) => {
   if (newSong) {
-    if (audioRef.value)
+    if (audioRef.value) {
       onPlay()
+      onUpdateHistory()
+    }
   }
 })
 
@@ -94,6 +110,16 @@ function handleLike() {
   if (isLike.value)
     removeToLikelist(currentSong.value)
   else addToLikelist(currentSong.value)
+}
+
+/**
+ * 更新最近播放
+ */
+function onUpdateHistory() {
+  const index = historylist.value.findIndex(record => record.id === currentSong.value.id)
+  if (index !== -1)
+    historylist.value.splice(index, 1)
+  addToHistorylist(currentSong.value)
 }
 </script>
 
