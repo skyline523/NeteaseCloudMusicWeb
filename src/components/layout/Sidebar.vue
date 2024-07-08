@@ -48,9 +48,10 @@ const menus = ref<Menu[]>([
         <RouterLink
           :to="menu.path"
           flex="~ flex items-center gap-x-2"
-          hover="bg-#e4e8ec"
+          hover="bg-#e4e8ec text-gray-500"
           transition="duration-300"
-          rounded-lg px-3 py-2 text-gray-500
+          rounded-lg px-3 py-2
+          class="text-gray-500/80"
         >
           <div :class="menu.icon" />
           <span text="sm">{{ menu.name }}</span>
