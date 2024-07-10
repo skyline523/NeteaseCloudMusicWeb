@@ -74,6 +74,7 @@ const modules = computed(() => {
 
 <template>
   <Swiper
+    v-bind="$attrs"
     ref="swiper"
     :navigation="{
       nextEl: '.next-btn',

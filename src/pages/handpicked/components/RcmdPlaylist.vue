@@ -3,6 +3,7 @@ import { SwiperSlide } from 'swiper/vue'
 
 import ImgWidget from './ImgWidget.vue'
 import { getRcmdPlaylist } from '~/apis/playList'
+import { formatImage } from '~/utils'
 
 const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
   defaultParams: [10],
@@ -19,7 +20,7 @@ const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
         <div i-solar-alt-arrow-right-linear />
       </div>
     </div>
-    <div relative mt-2 px-6>
+    <div relative mt-2 h-272px px-6>
       <LeSwiper
         v-if="rcmdPlaylistPart"
         :slides-per-view="4"
@@ -27,13 +28,14 @@ const { data: rcmdPlaylistPart } = useRequest(getRcmdPlaylist, {
         :space-between="20"
         :pagination="false"
         :speed="800"
+        h-full
       >
         <SwiperSlide
           v-for="list in rcmdPlaylistPart.result"
           :key="list.id"
           class="swipe roundex-xl cursor-pointer overflow-hidden"
         >
-          <LeImage h-272px object-cover border="0 rounded-xl" :src="list.picUrl" />
+          <LeImage object-cover border="0 rounded-t-xl" :src="formatImage(list.picUrl, 218)" />
           <ImgWidget
             :id="list.id"
             :img-url="list.picUrl"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getPlaylistDetail } from '~/apis/playList'
+import { formatImage } from '~/utils'
 
 const props = defineProps({
   id: {
@@ -41,19 +42,19 @@ const { data } = useRequest(getPlaylistDetail, {
         <LeImage
           z-10 h-80px w-80px rounded-md object-contain
           position="absolute bottom-0"
-          :src="albumImgList[0]"
+          :src="formatImage(albumImgList[0], 80)"
         />
         /<LeImage
           class="z-5"
           h-60px w-60px rounded-md object-contain
           position="absolute bottom-0 left-7"
-          :src="albumImgList[1]"
+          :src="formatImage(albumImgList[1], 60)"
         />
         <LeImage
           class="z-2"
           h-40px w-40px rounded-md object-contain
           position="absolute bottom-0 left-14"
-          :src="albumImgList[2]"
+          :src="formatImage(albumImgList[2], 40)"
         />
       </div>
       <div h="full" w="full" flex="~ col justify-between">

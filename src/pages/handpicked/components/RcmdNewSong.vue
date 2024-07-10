@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { SwiperSlide } from 'swiper/vue'
 import { getRcmdNewSongs } from '~/apis/song'
+import { formatImage } from '~/utils'
 
 const { playSong } = usePlayerStore()
 
@@ -40,7 +41,7 @@ const { data: rcmdNewSongs } = useRequest(getRcmdNewSongs)
             hover="bg-white shadow-c"
           >
             <LeImage
-              :src="item.picUrl"
+              :src="formatImage(item.picUrl, 64)"
               h-16 w-16 rounded-md object-cover
               @click="playSong(item.id)"
             />
