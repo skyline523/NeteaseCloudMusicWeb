@@ -40,7 +40,7 @@ const hasPlaylist = computed(() => playlist.value && playlist.value.length > 0)
     text="center gray-700"
     border="~ border-gray-50 rounded-lg"
     position="relative"
-    h-780px max-w-1220px w-full overflow-hidden shadow-gray-200 shadow-lg
+    h-780px min-w-1220px w-1220px overflow-hidden shadow-gray-200 shadow-lg
   >
     <Sidebar />
     <div
