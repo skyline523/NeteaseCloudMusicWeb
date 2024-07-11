@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getPlaylistDetail } from '~/apis/playList'
-import { formatImage } from '~/utils'
+import { formatImage } from '~/utils/image'
 
 const props = defineProps({
   id: {
