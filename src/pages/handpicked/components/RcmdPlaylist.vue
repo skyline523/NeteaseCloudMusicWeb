@@ -4,7 +4,7 @@ import { ContentLoader } from 'vue-content-loader'
 
 import ImgWidget from './ImgWidget.vue'
 import { getRcmdPlaylist } from '~/apis/playList'
-import { formatImage } from '~/utils'
+import { formatImage } from '~/utils/image'
 
 const { data: rcmdPlaylistPart, loading } = useRequest(getRcmdPlaylist, {
   defaultParams: [10],
