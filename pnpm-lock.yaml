@@ -44,6 +44,9 @@ importers:
       vue:
         specifier: ^3.4.23
         version: 3.4.23(typescript@5.4.5)
+      vue-content-loader:
+        specifier: ^2.0.1
+        version: 2.0.1(vue@3.4.23(typescript@5.4.5))
       vue-demi:
         specifier: ^0.14.7
         version: 0.14.7(vue@3.4.23(typescript@5.4.5))
@@ -4276,6 +4279,11 @@ packages:
 
   vue-component-type-helpers@2.0.13:
     resolution: {integrity: sha512-xNO5B7DstNWETnoYflLkVgh8dK8h2ZDgxY1M2O0zrqGeBNq5yAZ8a10yCS9+HnixouNGYNX+ggU9MQQq86HTpg==}
+
+  vue-content-loader@2.0.1:
+    resolution: {integrity: sha512-pkof4+q2xmzNEdhqelxtJejeP/vQUJtLle4/v2ueG+HURqM9Q/GIGC8GJ2bVVWeLfTDET51jqimwQdmxJTlu0g==}
+    peerDependencies:
+      vue: ^3
 
   vue-demi@0.14.7:
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
@@ -9149,6 +9157,10 @@ snapshots:
       - terser
 
   vue-component-type-helpers@2.0.13: {}
+
+  vue-content-loader@2.0.1(vue@3.4.23(typescript@5.4.5)):
+    dependencies:
+      vue: 3.4.23(typescript@5.4.5)
 
   vue-demi@0.14.7(vue@3.4.23(typescript@5.4.5)):
     dependencies:

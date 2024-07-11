@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { songUrl } from '~/apis/song'
-import { formatTime } from '~/utils'
+import { formatImage, formatTime } from '~/utils'
 import { useAudio } from '~/hooks/useAudio'
 import record from '~/assets/images/record.png'
 import type { Mode } from '~/stores/player'
@@ -133,7 +133,7 @@ function onUpdateHistory() {
     <!-- 播放器左侧信息 -->
     <div v-if="currentSong" max-w-320px w-full px-7 flex="~ items-center gap-x-2">
       <div
-        relative h-15 w-15
+        relative h-14 w-14
         flex="~ shrink-0"
         class="record"
         :style="{ animationPlayState: isPlaying ? 'running' : 'paused' }"
@@ -143,13 +143,13 @@ function onUpdateHistory() {
           class="absolute left-0 top-0 h-full w-full"
         />
         <LeImage
-          :src="currentSong.al.picUrl"
-          class="absolute left-50% top-50% h-68% w-68% translate-x--50% translate-y--50% rounded-full"
+          :src="formatImage(currentSong.al.picUrl, 38)"
+          class="absolute left-50% top-50% h-38px w-38px translate-x--50% translate-y--50% rounded-full"
         />
       </div>
       <div flex="~ col gap-y-1">
         <div text="sm txt-gray" line-clamp-1>
-          <span text="black">{{ currentSong.name }} - </span>
+          <span text="black" ml-1>{{ currentSong.name }} - </span>
           <LeArtistText :artists="currentSong.ar" class="text-xs" />
         </div>
         <div flex="~ items-center gap-x-4" text="gray-500/80" px-1>

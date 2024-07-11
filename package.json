@@ -29,6 +29,7 @@
     "pinia": "^2.1.7",
     "swiper": "^11.1.1",
     "vue": "^3.4.23",
+    "vue-content-loader": "^2.0.1",
     "vue-demi": "^0.14.7",
     "vue-hooks-plus": "^1.8.9",
     "vue-i18n": "^9.13.0",
