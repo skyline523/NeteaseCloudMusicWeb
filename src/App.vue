@@ -25,12 +25,6 @@ useHead({
       href: '/favicon.png',
     },
   ],
-  script: [
-    {
-      type: 'text/javascript',
-      src: 'https://cdn.jsdelivr.net/gh/LittleStar-OuO/ColorfulImgSimple/src/ColorfulImgSimple.js',
-    },
-  ],
 })
 </script>
 

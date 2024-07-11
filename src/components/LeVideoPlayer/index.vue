@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { songUrl } from '~/apis/song'
-import { formatImage, formatTime } from '~/utils'
+import { formatTime } from '~/utils'
+import { formatImage } from '~/utils/image'
 import { useAudio } from '~/hooks/useAudio'
 import record from '~/assets/images/record.png'
 import type { Mode } from '~/stores/player'

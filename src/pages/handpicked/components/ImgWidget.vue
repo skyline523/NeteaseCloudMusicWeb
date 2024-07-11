@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { getPlaylistDetail } from '~/apis/playList'
-
-export interface RGB {
-  r: number
-  g: number
-  b: number
-}
+import type { RGB } from '~/utils/image'
+import { colorfulImg } from '~/utils/image'
 
 const props = defineProps({
   imgUrl: {
@@ -17,8 +13,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-declare function colorfulImg(imgUrl: string): PromiseLike<RGB>
 
 const imgColorRGB = ref<RGB>()
 

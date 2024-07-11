@@ -3,7 +3,7 @@ import { SwiperSlide } from 'swiper/vue'
 import { ContentLoader } from 'vue-content-loader'
 
 import { getRcmdNewSongs } from '~/apis/song'
-import { formatImage } from '~/utils'
+import { formatImage } from '~/utils/image'
 
 const { playSong } = usePlayerStore()
 
