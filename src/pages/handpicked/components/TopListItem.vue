@@ -26,7 +26,7 @@ const { data } = useRequest(getPlaylistDetail, {
 <template>
   <div
     v-if="data"
-    rounded-lg bg-white p-5 shadow-c
+    cursor-pointer rounded-lg bg-white p-5 shadow-c
     class="group"
   >
     <div flex="~ items-center justify-between" mb-3>
@@ -40,18 +40,8 @@ const { data } = useRequest(getPlaylistDetail, {
         border="rounded-md"
         relative shrink-0 overflow-hidden shadow-b
       >
-        <div z-10 h-80px w-80px position="absolute bottom-0">
-          <LeImage
-            h-full w-full rounded-md object-contain
-            :src="formatImage(albumImgList[0], 80)"
-          />
-          <div
-            position="absolute top-0 left-0"
-            h-full w-full rounded-md opacity-20 duration-200
-            class="group-hover:bg-gray-800"
-          />
-        </div>
-        /<LeImage
+        <MaskImage z-10 h-80px w-80px position="absolute bottom-0" :src="formatImage(albumImgList[0], 80)" />
+        <LeImage
           class="z-5"
           h-60px w-60px rounded-md object-contain
           position="absolute bottom-0 left-7"

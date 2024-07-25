@@ -2,10 +2,8 @@
 import { SwiperSlide } from 'swiper/vue'
 import { ContentLoader } from 'vue-content-loader'
 
+import NewSongItem from './NewSongItem.vue'
 import { getRcmdNewSongs } from '~/apis/song'
-import { formatImage } from '~/utils/image'
-
-const { playSong } = usePlayerStore()
 
 const { data: rcmdNewSongs, loading } = useRequest(getRcmdNewSongs)
 </script>
@@ -65,31 +63,7 @@ const { data: rcmdNewSongs, loading } = useRequest(getRcmdNewSongs)
           :key="item.id"
           class="h-full"
         >
-          <div
-            h-full cursor-pointer rounded-lg p-2 duration-300
-            flex="~"
-            hover="bg-white shadow-c"
-            class="group"
-          >
-            <div relative>
-              <LeImage
-                :src="formatImage(item.picUrl, 64)"
-                h-16 w-16 rounded-md object-cover
-                @click="playSong(item.id)"
-              />
-              <div
-                position="absolute top-0 left-0"
-                h-full w-full rounded-md opacity-20 duration-200
-                class="group-hover:bg-gray-800"
-              />
-            </div>
-            <div ml-3 h-full flex="~ col items-start justify-center gap-y-1">
-              <div>{{ item.name }}</div>
-              <div text="xs txt-gray" line-clamp-1>
-                <LeArtistText :artists="item.song.artists" />
-              </div>
-            </div>
-          </div>
+          <NewSongItem :rcmd-song="item" />
         </SwiperSlide>
       </LeSwiper>
     </div>

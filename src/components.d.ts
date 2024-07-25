@@ -19,6 +19,7 @@ declare module 'vue' {
     LeTabs: typeof import('./components/LeTabs/index.vue')['default']
     LeVideoPlayer: typeof import('./components/LeVideoPlayer/index.vue')['default']
     LoginModal: typeof import('./components/layout/LoginModal.vue')['default']
+    MaskImage: typeof import('./components/LeImage/MaskImage.vue')['default']
     Navbar: typeof import('./components/layout/Navbar.vue')['default']
     PlayList: typeof import('./components/LeVideoPlayer/PlayList.vue')['default']
     ProgressBar: typeof import('./components/LeVideoPlayer/ProgressBar.vue')['default']

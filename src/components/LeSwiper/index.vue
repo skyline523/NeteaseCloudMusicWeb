@@ -90,23 +90,21 @@ const modules = computed(() => {
     :loop="loop"
     :autoplay="autoplay"
     :grid="grid"
-    class="group !static"
+    class="group/swipe !static"
   >
     <slot />
     <div
-      class="prev-btn -translate-y-1/2"
+      class="prev-btn -translate-y-1/2 group-hover/swipe:opacity-100"
       position="absolute top-1/2 left-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
-      group-hover="opacity-100"
       transition="duration-300"
     >
       <img :src="arrowLeft" h-full w-full>
     </div>
     <div
-      class="next-btn -translate-y-1/2"
+      class="next-btn -translate-y-1/2 group-hover/swipe:opacity-100"
       position="absolute top-1/2 right-[-6px]"
       h-44px w-26px cursor-pointer opacity-0
-      group-hover="opacity-100"
       transition="duration-300"
     >
       <img :src="arrowRight" h-full w-full>
