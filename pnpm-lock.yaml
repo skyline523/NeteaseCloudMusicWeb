@@ -20,6 +20,9 @@ importers:
       '@vueuse/head':
         specifier: ^2.0.0
         version: 2.0.0(vue@3.4.23(typescript@5.4.5))
+      '@xperia11/utils':
+        specifier: ^0.0.2
+        version: 0.0.2
       ant-design-vue:
         specifier: ^4.1.2
         version: 4.1.2(vue@3.4.23(typescript@5.4.5))
@@ -1406,6 +1409,9 @@ packages:
 
   '@vueuse/shared@10.9.0':
     resolution: {integrity: sha512-Uud2IWncmAfJvRaFYzv5OHDli+FbOzxiVEQdLCKQKLyhz94PIyFC3CHcH7EDMwIn8NPtD06+PNbC/PiO0LGLtw==}
+
+  '@xperia11/utils@0.0.2':
+    resolution: {integrity: sha512-Y3jzO15l4gudcMtAOn8L2a/JPi6vqm3D4PwnK3D0zOe1Pmb++6/RiOwk5oLn3MOjh6fzsyrv0Cww9S1xCQZDOw==}
 
   abbrev@2.0.0:
     resolution: {integrity: sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==}
@@ -6032,6 +6038,8 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@xperia11/utils@0.0.2': {}
 
   abbrev@2.0.0: {}
 

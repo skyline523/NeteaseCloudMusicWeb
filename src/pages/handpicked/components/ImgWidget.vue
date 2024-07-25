@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { colorfulImg } from '@xperia11/utils'
 import { getPlaylistDetail } from '~/apis/playList'
 import type { RGB } from '~/utils/image'
-import { colorfulImg } from '~/utils/image'
+// import { colorfulImg } from '~/utils/image'
 
 const props = defineProps({
   imgUrl: {
