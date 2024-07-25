@@ -13,6 +13,9 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  size: {
+    type: Number,
+  },
 })
 </script>
 
@@ -34,7 +37,14 @@ defineProps({
       h-full w-full opacity-0 duration-200
       class="group-hover:opacity-100"
     >
-      <div i-solar-play-bold text="white xl" hover="text-gray-100 scale-110" />
+      <div
+        i-solar-play-bold
+        text="white xl"
+        hover="text-gray-100 scale-110"
+        :style="{
+          fontSize: size ? `${size}px` : '20px',
+        }"
+      />
     </div>
   </div>
 </template>

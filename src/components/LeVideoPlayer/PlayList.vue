@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { formatTime } from '~/utils'
+import { formatImage } from '~/utils/image'
 
 defineOptions({
   name: 'PlayList',
@@ -65,8 +66,14 @@ const playListVisible = ref(false)
         p="x-4 y-2"
         transition="background-color duration-200"
         hover="bg-lighter-gray"
+        class="group cursor-pointer"
       >
-        <LeImage :src="song.al.picUrl" class="h-12 w-12 cursor-pointer rounded-lg" @click="playerStore.playSong(song.id)" />
+        <MaskImage
+          relative h-12 w-12
+          :src="formatImage(song.al.picUrl, 48)"
+          :size="16"
+          @click="playerStore.playSong(song.id)"
+        />
         <div flex="~ col items-start gap-y-2px 1">
           <span text="sm">{{ song.name }}</span>
           <div>

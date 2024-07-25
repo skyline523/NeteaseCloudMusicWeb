@@ -149,10 +149,10 @@ function onUpdateHistory() {
         />
       </div>
       <div flex="~ col gap-y-1">
-        <div text="sm txt-gray" line-clamp-1>
+        <marquee text="sm txt-gray" scrollamount="3" line-clamp-1>
           <span text="black" ml-1>{{ currentSong.name }} - </span>
           <LeArtistText :artists="currentSong.ar" class="text-xs" />
-        </div>
+        </marquee>
         <div flex="~ items-center gap-x-4" text="gray-500/80" px-1>
           <div i-solar-add-folder-linear />
           <div i-solar-chat-round-call-broken />
