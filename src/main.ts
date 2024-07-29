@@ -1,7 +1,7 @@
 import { ViteSSG } from 'vite-ssg'
 import { setupLayouts } from 'virtual:generated-layouts'
 
-import { routes } from 'vue-router/auto-routes'
+import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 import App from './App.vue'
 import type { UserModule } from './types'
 
@@ -28,5 +28,8 @@ export const createApp = ViteSSG(
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
       .forEach(i => i.install?.(ctx))
     // ctx.app.use(Previewer)
+
+    if (import.meta.hot)
+      handleHotUpdate(ctx.router)
   },
 )
