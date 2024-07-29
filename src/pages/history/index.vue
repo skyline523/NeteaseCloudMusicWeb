@@ -38,11 +38,16 @@ const columns = [
 </script>
 
 <template>
-  <div pb-4 space-y-6>
-    <a-table :columns="columns" :data-source="historylist" :pagination="false">
+  <div class="history" px-10 pb-4 space-y-6>
+    <a-table
+      :columns="columns"
+      :data-source="historylist"
+      :pagination="false"
+      row-class-name="bg-transparent"
+    >
       <template #bodyCell="{ column, record, index }">
         <template v-if="column.dataIndex === 'index'">
-          <span>{{ index }}</span>
+          <span>{{ index < 10 ? `0${index + 1}` : `${index + 1}` }}</span>
         </template>
         <template v-if="column.dataIndex === 'title'">
           <span>{{ record.name }}</span>
@@ -62,3 +67,26 @@ const columns = [
 meta:
   layout: home
 </route>
+
+<style>
+.history {
+  .ant-table,
+  .ant-table-cell {
+    background-color: transparent !important;
+  }
+
+  .ant-table-cell::before {
+    display: none;
+  }
+
+  .ant-table-thead .ant-table-cell {
+    padding: 8px 16px;
+    font-weight: 400 !important;
+    color: rgb(107 114 128 / 0.8);
+  }
+
+  .ant-table-tbody .ant-table-cell {
+    color: #4b5563;
+  }
+}
+</style>
