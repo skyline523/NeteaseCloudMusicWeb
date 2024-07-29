@@ -24,8 +24,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(vue@3.4.23(typescript@5.4.5))
       '@xperia11/utils':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.13
+        version: 0.0.13
       ant-design-vue:
         specifier: ^4.1.2
         version: 4.1.2(vue@3.4.23(typescript@5.4.5))
@@ -138,9 +138,6 @@ importers:
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
-      unocss:
-        specifier: ^0.59.4
-        version: 0.59.4(postcss@8.4.38)(rollup@4.14.3)(vite@5.2.9(@types/node@20.12.7))
       unplugin-auto-import:
         specifier: ^0.17.5
         version: 0.17.5(@vueuse/core@10.9.0(vue@3.4.23(typescript@5.4.5)))(rollup@4.14.3)
@@ -1411,8 +1408,8 @@ packages:
   '@vueuse/shared@10.9.0':
     resolution: {integrity: sha512-Uud2IWncmAfJvRaFYzv5OHDli+FbOzxiVEQdLCKQKLyhz94PIyFC3CHcH7EDMwIn8NPtD06+PNbC/PiO0LGLtw==}
 
-  '@xperia11/utils@0.0.7':
-    resolution: {integrity: sha512-d6RXUgd0AJHuWyZL8d/nCOCkysGNduzQ9iCPBZWZPOp94zk9IpVDPtHpyRN4od7eXTUPkgYneuzAGjHdiOunkw==}
+  '@xperia11/utils@0.0.13':
+    resolution: {integrity: sha512-A070z5k/kZELha52buzRTEqxswD7dFTKeZHblKUy9ZG0OwwEV5UdVcs5im+I/WA058C4geEG6Tk746GG/IWusg==}
 
   abbrev@2.0.0:
     resolution: {integrity: sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==}
@@ -6044,7 +6041,7 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@xperia11/utils@0.0.7': {}
+  '@xperia11/utils@0.0.13': {}
 
   abbrev@2.0.0: {}
 
